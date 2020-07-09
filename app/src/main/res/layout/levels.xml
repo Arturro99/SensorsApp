@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="372dp"
+        android:layout_height="532dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.366">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/lvl1BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 1" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/lvl2BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 2" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/lvl3BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 3" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/lvl4BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 4" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/lvl5BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 5" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/lvl6BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 6" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/lvl7BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 7" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/lvl8BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 8" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/lvl9BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 9" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="287dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:text="LEVELS"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
