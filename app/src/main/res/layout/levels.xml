@@ -17,6 +17,7 @@
         app:layout_constraintVertical_bias="0.366">
 
         <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -25,6 +26,7 @@
                 android:id="@+id/lvl1BTN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:tag="lvl1"
                 android:text="LVL 1" />
 
             <Space
@@ -35,6 +37,7 @@
                 android:id="@+id/lvl2BTN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:tag="lvl2"
                 android:text="LVL 2" />
 
             <Space
@@ -124,4 +127,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

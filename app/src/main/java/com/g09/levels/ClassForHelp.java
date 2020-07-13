@@ -1,7 +1,7 @@
-package com.g09;
+package com.g09.levels;
+
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.R;
 
-public class Lvl3 extends AppCompatActivity implements SensorEventListener {
+
+public class ClassForHelp extends AppCompatActivity implements SensorEventListener {
 
     TextView txt_compass;
+    TextView lvl3text;
     int mAzimuth;
     private SensorManager mSensorManager;
     private Sensor mRotationV, mAccelerometer, mMagnetometer;
@@ -36,7 +38,8 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lvl3);
-
+        lvl3text = (TextView)findViewById(R.id.lvl3txt);
+        lvl3text.setText("aaa");
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         txt_compass = (TextView) findViewById(R.id.txt_azimuth);
 
@@ -44,6 +47,7 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
     }
 
     public void start() {
+        System.out.println("bbb");
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
             if ((mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) || (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null)) {
                 noSensorsAlert();
@@ -59,6 +63,7 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
             mRotationV = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
             haveSensor = mSensorManager.registerListener(this, mRotationV, SensorManager.SENSOR_DELAY_UI);
         }
+
     }
 
     public void noSensorsAlert() {
@@ -87,6 +92,7 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
     @Override
     protected void onPause() {
         super.onPause();
+        System.out.println("stop");
         stop();
     }
 
@@ -96,8 +102,10 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
         start();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSensorChanged(SensorEvent event) {
+        System.out.println("aaaa");
         if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
             SensorManager.getRotationMatrixFromVector(rMat, event.values);
             mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
@@ -106,23 +114,43 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
             mLastAccelerometerSet = true;
+            System.out.println("111111111");
         } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
             System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
             mLastMagnetometerSet = true;
+            System.out.println("22222222");
         }
+
         if (mLastAccelerometerSet && mLastMagnetometerSet) {
             SensorManager.getRotationMatrix(rMat, null, mLastAccelerometer, mLastMagnetometer);
             SensorManager.getOrientation(rMat, orientation);
             mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
+            System.out.println("truuuuuue");
         }
-
+//        System.out.println("rmat");
+//        for (int i = 0; i<9; i++) {
+//            System.out.println(i+ "   " + rMat[i] + "\n");
+//        }
+//        System.out.println("orient");
+//        for (int i = 0; i<3; i++) {
+//            System.out.println(i+ "   " + orientation[i] + "\n");
+//        }
         mAzimuth = Math.round(mAzimuth);
-
+        System.out.println("values");
+        for (int i = 0; i<event.values.length; i++) {
+            System.out.println(i+ "   " + event.values[i] + "\n");
+        }
 
         String where = "NW";
 
-        if (mAzimuth >= 350 || mAzimuth <= 10)
+        if (mAzimuth >= 350 || mAzimuth <= 10) {
             where = "N";
+            if(mLastAccelerometer[2] < -8) {
+
+                lvl3text.setText("Udalo sie");
+            }
+        }
+
         if (mAzimuth < 350 && mAzimuth > 280)
             where = "NW";
         if (mAzimuth <= 280 && mAzimuth > 260)
@@ -140,10 +168,18 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
 
 
         txt_compass.setText(mAzimuth + "° " + where);
+
+        for (int i = 0; i<3; i++) {
+            System.out.println(i+ "   " + mLastAccelerometer[i] + "\n");
+        }
+        for (int i = 0; i<mLastMagnetometer.length; i++) {
+            System.out.println(i+ "   " + mLastMagnetometer[i] + "\n");
+        }
+        //wartosc mLastAccelerometer[2] musi być mniejsza niż -8 (przyspieszenie ziemskie)
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
+        System.out.println("accuracy");
     }
 }
