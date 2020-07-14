@@ -41,18 +41,21 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
     }
 
     public void start() {
+        System.out.println("bbb");
         if ((mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) || (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null)) {
             noSensorsAlert();
         }
         else {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+            mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+            mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_UI);
         }
     }
 
     public void noSensorsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Your device doesn't support the sensors used in level.")
+        alertDialog.setMessage("Your device doesn't support the Compass.")
                 .setCancelable(false)
                 .setNegativeButton("Close",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -101,8 +104,8 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
         if (mAzimuth >= 350 || mAzimuth <= 10) {
             where = "N";
             if(mLastAccelerometer[2] < -8) { //wartosc mLastAccelerometer[2] musi być mniejsza niż -8 (przyspieszenie ziemskie)
-                where += " udalo sie";
-                //Miejsce na funkcję, konczaca level
+                where += " \nudalo sie";
+                //Tu metoda, ktora konczy level
             }
         }
         if (mAzimuth < 350 && mAzimuth > 280)
@@ -122,6 +125,8 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
 
 
         txt_compass.setText(mAzimuth + "° " + where);
+
+
     }
 
     @Override
