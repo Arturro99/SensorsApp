@@ -73,13 +73,28 @@ public class Lvl5 extends AppCompatActivity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         proximityValue = (int) event.values[0];
         String f = "";
-        if(proximityValue == 0)
+        if(proximityValue == 0) {
             f = "\nudalo sie";
+            winAlert();
+            onPause();
+        }
         lvl5txt.setText(String.valueOf(proximityValue) + " cm" + f);
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    public void winAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Udalo Ci się przejść poziom!")
+                .setCancelable(false)
+                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        alertDialog.show();
     }
 }

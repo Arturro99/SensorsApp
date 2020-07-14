@@ -105,6 +105,8 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
             if(mLastAccelerometer[2] < -8) { //wartosc mLastAccelerometer[2] musi być mniejsza niż -8 (przyspieszenie ziemskie)
                 where += " \nudalo sie";
                 //Tu metoda, ktora konczy level
+                winAlert();
+                onPause();
             }
         }
         if (mAzimuth < 350 && mAzimuth > 280)
@@ -126,6 +128,18 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
         txt_compass.setText(mAzimuth + "° " + where);
 
 
+    }
+
+    public void winAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Udalo Ci się przejść poziom!")
+                .setCancelable(false)
+                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        alertDialog.show();
     }
 
     @Override

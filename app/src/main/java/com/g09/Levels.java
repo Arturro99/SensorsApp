@@ -21,12 +21,21 @@ public class Levels extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.levels);
+        Button lvl1BTN = (Button)findViewById(R.id.lvl1BTN);
+        Button lvl2BTN = (Button)findViewById(R.id.lvl2BTN);
         Button lvl3BTN = (Button)findViewById(R.id.lvl3BTN);
         Button lvl4BTN = (Button)findViewById(R.id.lvl4BTN);
         Button lvl5BTN = (Button)findViewById(R.id.lvl5BTN);
 //        LinearLayout lin = (LinearLayout)findViewById(R.id.linear);
 //        Button lvl1 = lin.findViewWithTag("lvl1");
 //        lvl1.setText("aaa");
+
+        lvl1BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Lvl1.class));
+            }
+        });
         lvl3BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -76,13 +76,28 @@ public class Lvl4 extends AppCompatActivity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         lightValue = (int) event.values[0];
         String f = "";
-        if(lightValue > 9000)
+        if(lightValue > 9000) {
             f = "\nudalo sie";
+            winAlert();
+            onPause();
+        }
         lvl4txt.setText(String.valueOf(lightValue) + " lux" + f);
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    public void winAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Udalo Ci się przejść poziom!")
+                .setCancelable(false)
+                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        alertDialog.show();
     }
 }
