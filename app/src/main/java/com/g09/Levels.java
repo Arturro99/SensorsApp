@@ -36,6 +36,12 @@ public class Levels extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Lvl1.class));
             }
         });
+        lvl2BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Lvl2.class));
+            }
+        });
         lvl3BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
