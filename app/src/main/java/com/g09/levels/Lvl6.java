@@ -11,6 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+//Przyspieszenie liniowe		iNemo Linear Acceleration sensor		Telefon musi się znaleźc w spadku swobodnym
+//+wektor rotacji
+//I Believe I Can Fly
+
 public class Lvl6 extends AppCompatActivity implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mRotationV;

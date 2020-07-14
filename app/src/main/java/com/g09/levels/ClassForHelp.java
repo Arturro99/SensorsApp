@@ -38,8 +38,6 @@ public class ClassForHelp extends AppCompatActivity implements SensorEventListen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lvl3);
-        lvl3text = (TextView)findViewById(R.id.lvl3txt);
-        lvl3text.setText("aaa");
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         txt_compass = (TextView) findViewById(R.id.txt_azimuth);
 

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.R;
 
+//Magnetometr			AK09911 3-axis Magnetic field sensor		Góra telefonu ma wskazywać północ
 
 public class Lvl3 extends AppCompatActivity implements SensorEventListener {
 
@@ -41,7 +42,6 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
     }
 
     public void start() {
-        System.out.println("bbb");
         if ((mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) || (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null)) {
             noSensorsAlert();
         }
@@ -55,7 +55,7 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
 
     public void noSensorsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Your device doesn't support the Compass.")
+        alertDialog.setMessage("Your device doesn't support the sensors used in level.")
                 .setCancelable(false)
                 .setNegativeButton("Close",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -73,7 +73,6 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
     @Override
     protected void onPause() {
         super.onPause();
-        System.out.println("stop");
         stop();
     }
 

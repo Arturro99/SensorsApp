@@ -9,7 +9,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.g09.levels.Lvl3;
+import com.g09.levels.*;
+
 
 import javax.xml.datatype.Duration;
 
@@ -21,6 +22,8 @@ public class Levels extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.levels);
         Button lvl3BTN = (Button)findViewById(R.id.lvl3BTN);
+        Button lvl4BTN = (Button)findViewById(R.id.lvl4BTN);
+        Button lvl5BTN = (Button)findViewById(R.id.lvl5BTN);
 //        LinearLayout lin = (LinearLayout)findViewById(R.id.linear);
 //        Button lvl1 = lin.findViewWithTag("lvl1");
 //        lvl1.setText("aaa");
@@ -28,6 +31,18 @@ public class Levels extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), Lvl3.class));
+            }
+        });
+        lvl4BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Lvl4.class));
+            }
+        });
+        lvl5BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Lvl5.class));
             }
         });
     }

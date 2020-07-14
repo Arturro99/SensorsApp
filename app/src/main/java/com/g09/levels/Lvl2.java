@@ -8,14 +8,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-//Żyroskop			LSM330 Gyroscope sensor				Trzeba szybko zakrecić telefonem
-//You spin me right round
+//Akcelerometr			LSM330 3-axis accelerometer			Trzeba telefon ustawić pod odpowiednim kątem
 
-public class Lvl1 extends AppCompatActivity implements SensorEventListener {
+public class Lvl2 extends AppCompatActivity implements SensorEventListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override

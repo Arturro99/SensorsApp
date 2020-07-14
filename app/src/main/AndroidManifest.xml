@@ -17,7 +17,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Levels"/>
+        <activity android:name=".levels.Lvl1"/>
+        <activity android:name=".levels.Lvl2"/>
         <activity android:name=".levels.Lvl3"/>
+        <activity android:name=".levels.Lvl4"/>
+        <activity android:name=".levels.Lvl5"/>
+        <activity android:name=".levels.Lvl6"/>
+        <activity android:name=".levels.Lvl7"/>
     </application>
 
 </manifest>
