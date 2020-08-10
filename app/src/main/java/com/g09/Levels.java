@@ -26,6 +26,7 @@ public class Levels extends AppCompatActivity {
         Button lvl3BTN = (Button)findViewById(R.id.lvl3BTN);
         Button lvl4BTN = (Button)findViewById(R.id.lvl4BTN);
         Button lvl5BTN = (Button)findViewById(R.id.lvl5BTN);
+        Button lvl6BTN = (Button)findViewById(R.id.lvl6BTN);
 //        LinearLayout lin = (LinearLayout)findViewById(R.id.linear);
 //        Button lvl1 = lin.findViewWithTag("lvl1");
 //        lvl1.setText("aaa");
@@ -58,6 +59,12 @@ public class Levels extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), Lvl5.class));
+            }
+        });
+        lvl6BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Lvl6.class));
             }
         });
     }

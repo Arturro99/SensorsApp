@@ -5,11 +5,24 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.g09.R;
+
+import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.IOException;
 
 //Przyspieszenie liniowe		iNemo Linear Acceleration sensor		Telefon musi się znaleźc w spadku swobodnym
 //+wektor rotacji
@@ -17,22 +30,45 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Lvl6 extends AppCompatActivity implements SensorEventListener {
     private SensorManager mSensorManager;
-    private Sensor mRotationV;
+    private Sensor mPressure;
+    private Sensor mLinearAcceleration;
+    private float linearAccelerationValue;
+    private float pressureValue;
+    TextView lvl6txt;
+    TextView help;
+    boolean done = false;
+    float initialPressureValue = 0;
+
+    final Uri URI = Uri.fromFile(new File("android.resource://com.g09/raw/ouch.mp3"));
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.lvl6);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
+        lvl6txt = (TextView)findViewById(R.id.lvl6txt);
+        help = (TextView)findViewById(R.id.help);
+
+        start();
     }
 
     public void start() {
-
+        if(mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE) == null ||
+                mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE) == null)
+            noSensorsAlert();
+        else {
+            mPressure = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+            mSensorManager.registerListener(this, mPressure, SensorManager.SENSOR_DELAY_UI);
+//            mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+//            mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
+        }
 
     }
     public void stop() {
-
+        //mSensorManager.unregisterListener(this, mLinearAcceleration);
+        mSensorManager.unregisterListener(this, mPressure);
     }
 
     @Override
@@ -49,7 +85,7 @@ public class Lvl6 extends AppCompatActivity implements SensorEventListener {
 
     public void noSensorsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Your device doesn't support the Compass.")
+        alertDialog.setMessage("Your device doesn't support the sensors used in this level.")
                 .setCancelable(false)
                 .setNegativeButton("Close",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -61,11 +97,45 @@ public class Lvl6 extends AppCompatActivity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
+        //linearAccelerationValue = (float) sensorEvent.values[0];
+        if(!done) {
+            initialPressureValue = (float) sensorEvent.values[0];
+            help.setText(String.valueOf(initialPressureValue));
+        }
+        pressureValue = (float) sensorEvent.values[0];
+        pressureValue = Math.round(pressureValue*100)/100f;
+//        lvl6txt.setText((int) sensorEvent.values[1]);
+        if(pressureValue - initialPressureValue >= 0.08) {
+            try {
+                winAlert();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            onPause();
+            help.setText(String.valueOf(pressureValue-initialPressureValue));
+        }
+       lvl6txt.setText(String.valueOf(pressureValue) + "hPa ");
+        done = true;
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
+    public void winAlert() throws IOException {
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ouch);
+        mediaPlayer.start();
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("...and belief is all what's left.")
+                .setCancelable(false)
+                .setTitle("Well done!")
+                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        alertDialog.show();
+    }
+
 }
