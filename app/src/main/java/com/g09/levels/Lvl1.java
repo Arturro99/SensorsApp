@@ -46,7 +46,7 @@ public class Lvl1 extends AppCompatActivity implements SensorEventListener {
             if(max*0.9 < 30)
                 max *= 0.9;
             else
-                max = 30;
+                max = 20;
             mSensorManager.registerListener(this, mGyroscopeSensor, SensorManager.SENSOR_DELAY_UI);
         }
     }
@@ -65,7 +65,8 @@ public class Lvl1 extends AppCompatActivity implements SensorEventListener {
 
     public void winAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Udalo Ci się przejść poziom!")
+        alertDialog.setMessage("...Right round round round.")
+                .setTitle("Gratulacje")
                 .setCancelable(false)
                 .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

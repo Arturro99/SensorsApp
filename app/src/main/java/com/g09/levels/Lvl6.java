@@ -36,8 +36,13 @@ public class Lvl6 extends AppCompatActivity implements SensorEventListener {
     private float pressureValue;
     TextView lvl6txt;
     TextView help;
+    TextView maxLinearAcc;
+    TextView linearAcc;
     boolean done = false;
     float initialPressureValue = 0;
+
+    boolean enoughAcceleration = false;
+    boolean enoughPressure = false;
 
     final Uri URI = Uri.fromFile(new File("android.resource://com.g09/raw/ouch.mp3"));
     MediaPlayer mediaPlayer;
@@ -48,8 +53,9 @@ public class Lvl6 extends AppCompatActivity implements SensorEventListener {
         setContentView(R.layout.lvl6);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        lvl6txt = (TextView)findViewById(R.id.lvl6txt);
-        help = (TextView)findViewById(R.id.help);
+        lvl6txt = findViewById(R.id.lvl6txt);
+        help = findViewById(R.id.help);
+        maxLinearAcc = findViewById(R.id.maxLinearAcc);
 
         start();
     }
@@ -61,13 +67,13 @@ public class Lvl6 extends AppCompatActivity implements SensorEventListener {
         else {
             mPressure = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
             mSensorManager.registerListener(this, mPressure, SensorManager.SENSOR_DELAY_UI);
-//            mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-//            mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
+            mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+            mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
         }
 
     }
     public void stop() {
-        //mSensorManager.unregisterListener(this, mLinearAcceleration);
+        mSensorManager.unregisterListener(this, mLinearAcceleration);
         mSensorManager.unregisterListener(this, mPressure);
     }
 
@@ -97,25 +103,39 @@ public class Lvl6 extends AppCompatActivity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        //linearAccelerationValue = (float) sensorEvent.values[0];
-        if(!done) {
-            initialPressureValue = (float) sensorEvent.values[0];
-            help.setText(String.valueOf(initialPressureValue));
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE) {
+            if (!done) {
+                initialPressureValue = (float) sensorEvent.values[0];
+                help.setText(String.valueOf(initialPressureValue));
+                done = true;
+            }
+            pressureValue = (float) sensorEvent.values[0];
+            pressureValue = Math.round(pressureValue * 100) / 100f;
         }
-        pressureValue = (float) sensorEvent.values[0];
-        pressureValue = Math.round(pressureValue*100)/100f;
-//        lvl6txt.setText((int) sensorEvent.values[1]);
-        if(pressureValue - initialPressureValue >= 0.08) {
+        else if(sensorEvent.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION){
+            linearAccelerationValue = (float) sensorEvent.values[2];
+            linearAccelerationValue = Math.round(linearAccelerationValue * 100) / 100f;
+        }
+        if(linearAccelerationValue >= 5)
+            maxLinearAcc.setText(String.valueOf(linearAccelerationValue));
+        if(linearAccelerationValue >= 10) {
+            maxLinearAcc.setText(String.valueOf(linearAccelerationValue) + "m/s^2");
+            enoughAcceleration = true;
+            if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE && sensorEvent.values[0] >= 0.08) {
+                help.setText(String.valueOf(pressureValue - initialPressureValue));
+                enoughPressure = true;
+            }
+        }
+       lvl6txt.setText(String.valueOf(pressureValue) + "hPa ");
+
+        if(enoughAcceleration && enoughPressure) {
+            onPause();
             try {
                 winAlert();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            onPause();
-            help.setText(String.valueOf(pressureValue-initialPressureValue));
         }
-       lvl6txt.setText(String.valueOf(pressureValue) + "hPa ");
-        done = true;
     }
 
     @Override
@@ -129,7 +149,7 @@ public class Lvl6 extends AppCompatActivity implements SensorEventListener {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("...and belief is all what's left.")
                 .setCancelable(false)
-                .setTitle("Well done!")
+                .setTitle("Gratulacje")
                 .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         finish();
