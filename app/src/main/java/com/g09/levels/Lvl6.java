@@ -4,12 +4,14 @@ import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 //Przyspieszenie liniowe		iNemo Linear Acceleration sensor		Telefon musi się znaleźc w spadku swobodnym
 //+wektor rotacji
@@ -116,17 +119,25 @@ public class Lvl6 extends AppCompatActivity implements SensorEventListener {
             linearAccelerationValue = (float) sensorEvent.values[2];
             linearAccelerationValue = Math.round(linearAccelerationValue * 100) / 100f;
         }
-        if(linearAccelerationValue >= 5)
-            maxLinearAcc.setText(String.valueOf(linearAccelerationValue));
-        if(linearAccelerationValue >= 10) {
+        if(linearAccelerationValue >= 9) {
             maxLinearAcc.setText(String.valueOf(linearAccelerationValue) + "m/s^2");
             enoughAcceleration = true;
-            if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE && sensorEvent.values[0] >= 0.08) {
-                help.setText(String.valueOf(pressureValue - initialPressureValue));
-                enoughPressure = true;
-            }
+            mSensorManager.unregisterListener(this, mLinearAcceleration);
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE && sensorEvent.values[0] - initialPressureValue >= 0.08) {
+                        help.setText(String.valueOf(pressureValue - initialPressureValue));
+                        enoughPressure = true;
+                    }
+                }
+            };
+            Handler h = new Handler();
+            h.postDelayed(r, 500);
         }
-       lvl6txt.setText(String.valueOf(pressureValue) + "hPa ");
+        lvl6txt.setText(String.valueOf(pressureValue) + "hPa ");
+        mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
 
         if(enoughAcceleration && enoughPressure) {
             onPause();

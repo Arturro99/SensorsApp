@@ -23,5 +23,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button optionsBtn = (Button)findViewById(R.id.optionsBTN);
+        optionsBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Options.class));
+            }
+        });
+
+        Button exitBtn = (Button)findViewById(R.id.exitBTN);
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent exitIntent = new Intent(Intent.ACTION_MAIN);
+                exitIntent.addCategory(Intent.CATEGORY_HOME);
+                exitIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(exitIntent);
+            }
+        });
+
     }
 }
