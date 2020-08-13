@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.g09.R;
@@ -29,7 +30,10 @@ public class Lvl3 extends Level {
         setContentView(R.layout.lvl3);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         txt_compass = (TextView) findViewById(R.id.txt_azimuth);
-
+        if(getFlag()){
+            ImageView lvl3img = (ImageView) findViewById(R.id.lvl3img);
+            lvl3img.setImageResource(R.drawable.lvl3imgwhite);
+        }
         start();
     }
 

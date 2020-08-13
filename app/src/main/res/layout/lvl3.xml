@@ -15,7 +15,6 @@
         android:layout_marginTop="76dp"
         android:text="0°"
         android:textAlignment="center"
-        android:textColor="#000"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -23,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/lvl3img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,6 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.724"
-        app:srcCompat="@drawable/lvl3image" />
+        app:srcCompat="@drawable/lvl3imgblack" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
