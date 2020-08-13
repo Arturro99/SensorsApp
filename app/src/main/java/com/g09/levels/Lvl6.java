@@ -35,6 +35,8 @@ public class Lvl6 extends Level {
     final Uri URI = Uri.fromFile(new File("android.resource://com.g09/raw/ouch.mp3"));
     MediaPlayer mediaPlayer;
 
+    double a, b;
+
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl6);
@@ -45,6 +47,7 @@ public class Lvl6 extends Level {
         maxLinearAcc = findViewById(R.id.maxLinearAcc);
 
         start();
+        a = startTimer();
     }
 
     public void start() {
@@ -74,40 +77,46 @@ public class Lvl6 extends Level {
             }
             pressureValue = (float) sensorEvent.values[0];
             pressureValue = Math.round(pressureValue * 100) / 100f;
+            if(pressureValue < initialPressureValue)
+                initialPressureValue = pressureValue;
         }
         else if(sensorEvent.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION){
             linearAccelerationValue = (float) sensorEvent.values[2];
             linearAccelerationValue = Math.round(linearAccelerationValue * 100) / 100f;
         }
         if(linearAccelerationValue >= 9) {
+            mSensorManager.unregisterListener(this, mLinearAcceleration);
             maxLinearAcc.setText(String.valueOf(linearAccelerationValue) + "m/s^2");
             enoughAcceleration = true;
-            mSensorManager.unregisterListener(this, mLinearAcceleration);
             Runnable r = new Runnable() {
                 @Override
                 public void run() {
+                    help.setText(String.valueOf(sensorEvent.values[0]) + sensorEvent.sensor.getName());
                     if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE && sensorEvent.values[0] - initialPressureValue >= 0.08) {
-                        help.setText(String.valueOf(pressureValue - initialPressureValue));
                         enoughPressure = true;
                     }
                 }
             };
             Handler h = new Handler();
             h.postDelayed(r, 500);
+
+            if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE && sensorEvent.values[0] - initialPressureValue >= 0.02) {
+                mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+                mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
+            }
         }
         lvl6txt.setText(String.valueOf(pressureValue) + "hPa ");
-        mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
 
         if(enoughAcceleration && enoughPressure) {
             onPause();
             try {
+                b = stopTimer();
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ouch);
                 mediaPlayer.start();
             } finally {
 
             }
-            winAlert("Gratulację!", "...and belief is all what's left.");
+            winAlert("Gratulację!", "...and belief is all what's left.\nTwój czas: " + calculateElapsedTime(a, b) + " sekund\");");
         }
     }
 

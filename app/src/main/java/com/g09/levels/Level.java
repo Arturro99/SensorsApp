@@ -73,4 +73,18 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getBoolean("dark", false);
     }
+
+    protected double startTimer() {
+        double start = System.currentTimeMillis();
+        return start;
+    }
+
+    protected double stopTimer() {
+        double stop = System.currentTimeMillis();
+        return stop;
+    }
+
+    protected double calculateElapsedTime(double a, double b) {
+        return Math.round((b - a)/10.0)/100.0;
+    }
 }

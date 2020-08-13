@@ -13,6 +13,7 @@ public class Lvl2 extends Level {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     double x,y,z;
+    double a;
     TextView lvl2txt;
     @Override
     protected void onCreate() {
@@ -21,6 +22,7 @@ public class Lvl2 extends Level {
         lvl2txt = (TextView)findViewById(R.id.lvl2txt);
 
         start();
+        a = startTimer();
     }
 
     public void start() {

@@ -17,6 +17,8 @@ public class Lvl4 extends Level {
     int lightValue;
     TextView lvl4txt;
 
+    double a;
+
     @Override
     public void onCreate() {
         setContentView(R.layout.lvl4);
@@ -24,6 +26,7 @@ public class Lvl4 extends Level {
         lvl4txt = (TextView)findViewById(R.id.lvl4txt);
 
         start();
+        a = startTimer();
     }
 
     @Override
@@ -47,8 +50,9 @@ public class Lvl4 extends Level {
         lightValue = (int) sensorEvent.values[0];
         String f = "";
         if(lightValue > 6000) {
+            double b = stopTimer();
             f = "\nudalo sie";
-            winAlert("Gratulację!", "Udalo Ci się przejść poziom!");
+            winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
             onPause();
         }
         lvl4txt.setText(String.valueOf(lightValue) + " lux" + f);

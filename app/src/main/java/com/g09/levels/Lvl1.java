@@ -18,6 +18,8 @@ public class Lvl1 extends Level {
     float max;
     TextView lvl1txt;
 
+    double a;
+
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl1);
@@ -25,6 +27,7 @@ public class Lvl1 extends Level {
         lvl1txt = (TextView)findViewById(R.id.lvl1txt);
 
         start();
+        a = startTimer();
     }
 
     public void start() {
@@ -37,7 +40,7 @@ public class Lvl1 extends Level {
             if(max*0.9 < 30)
                 max *= 0.9;
             else
-                max = 20;
+                max = 10;
             mSensorManager.registerListener(this, mGyroscopeSensor, SensorManager.SENSOR_DELAY_UI);
         }
     }
@@ -51,9 +54,10 @@ public class Lvl1 extends Level {
         gyroscopeValue = (int) event.values[2];
         String f = "";
         if(gyroscopeValue < -max) {
+            double b = stopTimer();
             f = "\nudalo sie ";
             lvl1txt.setText(String.valueOf(gyroscopeValue) + f + String.valueOf(max));
-            winAlert("Gratulację!", "Udalo Ci się przejść poziom!");
+            winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
             onPause();
         }
     }

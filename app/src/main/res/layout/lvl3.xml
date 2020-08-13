@@ -33,5 +33,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.724"
         app:srcCompat="@drawable/lvl3image" />
-
+    <ImageButton
+        android:id="@+id/hint3"
+        android:layout_width="60dp"
+        android:layout_height="69dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/question_mark" />
 </androidx.constraintlayout.widget.ConstraintLayout>

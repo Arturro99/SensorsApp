@@ -22,6 +22,7 @@ public class Lvl3 extends Level {
     private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
 
+    double a;
 
 
     @Override
@@ -31,6 +32,7 @@ public class Lvl3 extends Level {
         txt_compass = (TextView) findViewById(R.id.txt_azimuth);
 
         start();
+        a = startTimer();
     }
 
     public void start() {
@@ -73,9 +75,10 @@ public class Lvl3 extends Level {
         if (mAzimuth >= 350 || mAzimuth <= 10) {
             where = "N";
             if(mLastAccelerometer[2] < -8) { //wartosc mLastAccelerometer[2] musi być mniejsza niż -8 (przyspieszenie ziemskie)
+                double b = stopTimer();
                 where += " \nudalo sie";
                 //Tu metoda, ktora konczy level
-                winAlert("Gratulację!", "Udalo Ci się przejść poziom!");
+                winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
                 onPause();
             }
         }

@@ -29,4 +29,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/hint4"
+        android:layout_width="60dp"
+        android:layout_height="69dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/question_mark" />
 </androidx.constraintlayout.widget.ConstraintLayout>

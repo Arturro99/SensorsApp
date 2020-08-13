@@ -14,6 +14,8 @@ public class Lvl5 extends Level {
     private Sensor mProximitySensor;
     int proximityValue;
     TextView lvl5txt;
+
+    double a;
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl5);
@@ -21,6 +23,7 @@ public class Lvl5 extends Level {
         lvl5txt = (TextView)findViewById(R.id.lvl5txt);
 
         start();
+        a = startTimer();
     }
 
     public void start() {
@@ -45,8 +48,9 @@ public class Lvl5 extends Level {
         proximityValue = (int) event.values[0];
         String f = "";
         if(proximityValue == 0) {
+            double b = stopTimer();
             f = "\nudalo sie";
-            winAlert("Gratulację!", "Udalo Ci się przejść poziom!");
+            winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
             onPause();
         }
         lvl5txt.setText(String.valueOf(proximityValue) + " cm" + f);
