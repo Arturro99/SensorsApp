@@ -9,7 +9,7 @@
     <Button
         android:id="@+id/startBTN"
         android:layout_width="263dp"
-        android:layout_height="71dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="START"
         app:layout_constraintBottom_toTopOf="@+id/levelsBTN"
@@ -22,7 +22,7 @@
         android:id="@+id/exitBTN"
         android:layout_width="263dp"
         android:layout_height="71dp"
-        android:layout_marginBottom="172dp"
+        android:layout_marginBottom="56dp"
         android:text="EXIT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
