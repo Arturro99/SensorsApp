@@ -1,16 +1,16 @@
 package com.g09;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.levels.*;
-
 
 import javax.xml.datatype.Duration;
 
@@ -19,6 +19,7 @@ public class Levels extends AppCompatActivity {
     Duration[] levelTime = new Duration[7];
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(getFlag() ? R.style.AppThemeDark : R.style.AppThemeLight);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.levels);
         Button lvl1BTN = (Button)findViewById(R.id.lvl1BTN);
@@ -27,6 +28,7 @@ public class Levels extends AppCompatActivity {
         Button lvl4BTN = (Button)findViewById(R.id.lvl4BTN);
         Button lvl5BTN = (Button)findViewById(R.id.lvl5BTN);
         Button lvl6BTN = (Button)findViewById(R.id.lvl6BTN);
+        Button lvl7BTN = (Button)findViewById(R.id.lvl7BTN);
 //        LinearLayout lin = (LinearLayout)findViewById(R.id.linear);
 //        Button lvl1 = lin.findViewWithTag("lvl1");
 //        lvl1.setText("aaa");
@@ -67,9 +69,18 @@ public class Levels extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Lvl6.class));
             }
         });
+        lvl7BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Lvl7.class));
+            }
+        });
     }
     static public void completeLevel(int level) {
         levelComplete[level-1] = true;
     }
-
+    private boolean getFlag() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getBoolean("dark", false);
+    }
 }

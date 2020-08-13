@@ -1,29 +1,21 @@
 package com.g09.levels;
 
-import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.R;
 
 //Akcelerometr			LSM330 3-axis accelerometer			Trzeba telefon ustawić pod odpowiednim kątem
 
-public class Lvl2 extends AppCompatActivity implements SensorEventListener {
+public class Lvl2 extends Level {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     double x,y,z;
     TextView lvl2txt;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate() {
         setContentView(R.layout.lvl2);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lvl2txt = (TextView)findViewById(R.id.lvl2txt);
@@ -41,33 +33,10 @@ public class Lvl2 extends AppCompatActivity implements SensorEventListener {
         }
     }
 
-    public void noSensorsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Your device doesn't support the sensors used in level.")
-                .setCancelable(false)
-                .setNegativeButton("Close",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        alertDialog.show();
-    }
-
     public void stop() {
         mSensorManager.unregisterListener(this, mAccelerometer);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        start();
-    }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -84,8 +53,4 @@ public class Lvl2 extends AppCompatActivity implements SensorEventListener {
         lvl2txt.setText(String.valueOf(a) + "°  " + String.valueOf(b) + "°");
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
 }

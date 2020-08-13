@@ -1,16 +1,9 @@
 package com.g09.levels;
 
-import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.R;
 
@@ -18,15 +11,14 @@ import com.g09.R;
 
 //Czujnik światła			Light sensor					Trzeba zbliżyć/oddalić telefon do/od lampi
 
-public class Lvl4 extends AppCompatActivity implements SensorEventListener {
+public class Lvl4 extends Level {
     private SensorManager mSensorManager;
     private Sensor mLightSensor;
     int lightValue;
     TextView lvl4txt;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate() {
         setContentView(R.layout.lvl4);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lvl4txt = (TextView)findViewById(R.id.lvl4txt);
@@ -34,6 +26,7 @@ public class Lvl4 extends AppCompatActivity implements SensorEventListener {
         start();
     }
 
+    @Override
     public void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT) == null) {
             noSensorsAlert();
@@ -44,60 +37,20 @@ public class Lvl4 extends AppCompatActivity implements SensorEventListener {
         }
     }
 
-    public void noSensorsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Your device doesn't support the sensors used in level.")
-                .setCancelable(false)
-                .setNegativeButton("Close",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        alertDialog.show();
-    }
-
+    @Override
     public void stop() {
-        mSensorManager.unregisterListener(this,mLightSensor);
+        mSensorManager.unregisterListener(this, mLightSensor);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        stop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        start();
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        lightValue = (int) event.values[0];
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        lightValue = (int) sensorEvent.values[0];
         String f = "";
-        if(lightValue > 9000) {
+        if(lightValue > 6000) {
             f = "\nudalo sie";
-            winAlert();
+            winAlert("Gratulację!", "Udalo Ci się przejść poziom!");
             onPause();
         }
         lvl4txt.setText(String.valueOf(lightValue) + " lux" + f);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
-
-    public void winAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Udalo Ci się przejść poziom!")
-                .setCancelable(false)
-                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        alertDialog.show();
     }
 }

@@ -1,29 +1,21 @@
 package com.g09.levels;
 
-import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.R;
 
 //Czujnik zbliżeniowy		Proximity sensor				Trzeba zbliżyć się do telefonu (czujnika)
 
-public class Lvl5 extends AppCompatActivity implements SensorEventListener {
+public class Lvl5 extends Level {
     private SensorManager mSensorManager;
     private Sensor mProximitySensor;
     int proximityValue;
     TextView lvl5txt;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate() {
         setContentView(R.layout.lvl5);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lvl5txt = (TextView)findViewById(R.id.lvl5txt);
@@ -41,33 +33,12 @@ public class Lvl5 extends AppCompatActivity implements SensorEventListener {
         }
     }
 
-    public void noSensorsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Your device doesn't support the sensors used in level.")
-                .setCancelable(false)
-                .setNegativeButton("Close",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        alertDialog.show();
-    }
 
     public void stop() {
         mSensorManager.unregisterListener(this,mProximitySensor);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stop();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        start();
-    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -75,26 +46,9 @@ public class Lvl5 extends AppCompatActivity implements SensorEventListener {
         String f = "";
         if(proximityValue == 0) {
             f = "\nudalo sie";
-            winAlert();
+            winAlert("Gratulację!", "Udalo Ci się przejść poziom!");
             onPause();
         }
         lvl5txt.setText(String.valueOf(proximityValue) + " cm" + f);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
-
-    public void winAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Udalo Ci się przejść poziom!")
-                .setCancelable(false)
-                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        alertDialog.show();
     }
 }

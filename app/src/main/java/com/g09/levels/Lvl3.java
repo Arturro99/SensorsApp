@@ -2,23 +2,16 @@ package com.g09.levels;
 
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.R;
 
 //Magnetometr			AK09911 3-axis Magnetic field sensor		Góra telefonu ma wskazywać północ
 
-public class Lvl3 extends AppCompatActivity implements SensorEventListener {
+public class Lvl3 extends Level {
 
     TextView txt_compass;
     int mAzimuth;
@@ -32,8 +25,7 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate() {
         setContentView(R.layout.lvl3);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         txt_compass = (TextView) findViewById(R.id.txt_azimuth);
@@ -53,34 +45,12 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
         }
     }
 
-    public void noSensorsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Your device doesn't support the sensors used in level.")
-                .setCancelable(false)
-                .setNegativeButton("Close",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        alertDialog.show();
-    }
 
     public void stop() {
         mSensorManager.unregisterListener(this,mAccelerometer);
         mSensorManager.unregisterListener(this,mMagnetometer);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        start();
-    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -105,7 +75,7 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
             if(mLastAccelerometer[2] < -8) { //wartosc mLastAccelerometer[2] musi być mniejsza niż -8 (przyspieszenie ziemskie)
                 where += " \nudalo sie";
                 //Tu metoda, ktora konczy level
-                winAlert();
+                winAlert("Gratulację!", "Udalo Ci się przejść poziom!");
                 onPause();
             }
         }
@@ -128,21 +98,5 @@ public class Lvl3 extends AppCompatActivity implements SensorEventListener {
         txt_compass.setText(mAzimuth + "° " + where);
 
 
-    }
-
-    public void winAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Udalo Ci się przejść poziom!")
-                .setCancelable(false)
-                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        alertDialog.show();
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
     }
 }
