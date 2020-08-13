@@ -69,7 +69,7 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         alertDialog.show();
     }
 
-    private boolean getFlag() {
+    protected boolean getFlag() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getBoolean("dark", false);
     }
