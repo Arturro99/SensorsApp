@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,14 @@ public class Lvl3 extends Level {
             ImageView lvl3img = (ImageView) findViewById(R.id.lvl3img);
             lvl3img.setImageResource(R.drawable.lvl3imgwhite);
         }
+        ImageButton hint = findViewById(R.id.hint3);
+
+        hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHint("Czy twórca poziomu zaliczył sprawdzian z kierunków świata?");
+            }
+        });
         start();
         a = startTimer();
     }

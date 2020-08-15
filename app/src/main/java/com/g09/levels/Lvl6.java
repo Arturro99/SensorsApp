@@ -6,6 +6,8 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.g09.R;
@@ -45,6 +47,14 @@ public class Lvl6 extends Level {
         lvl6txt = findViewById(R.id.lvl6txt);
         help = findViewById(R.id.help);
         maxLinearAcc = findViewById(R.id.maxLinearAcc);
+        ImageButton hint = findViewById(R.id.hint6);
+
+        hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHint("Czasem życie wymaga poświęceń.");
+            }
+        });
 
         start();
         a = startTimer();

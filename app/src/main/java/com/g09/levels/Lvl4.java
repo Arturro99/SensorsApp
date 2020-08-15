@@ -3,6 +3,8 @@ package com.g09.levels;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.g09.R;
@@ -24,6 +26,14 @@ public class Lvl4 extends Level {
         setContentView(R.layout.lvl4);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lvl4txt = (TextView)findViewById(R.id.lvl4txt);
+        ImageButton hint = findViewById(R.id.hint4);
+
+        hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHint("Warto poczytać o jednostkach pochodnych układu SI.");
+            }
+        });
 
         start();
         a = startTimer();

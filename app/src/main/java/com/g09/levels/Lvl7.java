@@ -3,6 +3,8 @@ package com.g09.levels;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.g09.R;
@@ -14,6 +16,15 @@ public class Lvl7 extends Level {
     @Override
     public void onCreate() {
         setContentView(R.layout.lvl7);
+
+        ImageButton hint = findViewById(R.id.hint7);
+
+        hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHint("Na początku było Słowo. (Genesis, 1, 1)");
+            }
+        });
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.g09.levels;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.g09.R;
@@ -25,6 +27,14 @@ public class Lvl1 extends Level {
         setContentView(R.layout.lvl1);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lvl1txt = (TextView)findViewById(R.id.lvl1txt);
+        ImageButton hint = findViewById(R.id.hint1);
+
+        hint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHint("Czynność powinna wzorować się na ruchu wskazówek zegara.");
+            }
+        });
 
         start();
         a = startTimer();

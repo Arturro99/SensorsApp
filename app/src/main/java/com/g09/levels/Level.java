@@ -69,6 +69,14 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         alertDialog.show();
     }
 
+    protected void showHint(String message) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage(message)
+                .setCancelable(false)
+                .setNegativeButton("Ok",null);
+        alertDialog.show();
+    }
+
     protected boolean getFlag() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getBoolean("dark", false);
