@@ -9,8 +9,9 @@
 
     <TextView
         android:id="@+id/time2"
-        android:layout_width="162dp"
-        android:layout_height="wrap_content"
+        android:layout_width="418dp"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,30 +20,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
-        android:layout_width="409dp"
-        android:layout_height="656dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="400dp"
+        android:layout_height="655dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/man"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            app:srcCompat="@drawable/kulka" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/kulka2" />
 
-    </FrameLayout>
+        <ImageView
+            android:id="@+id/virus"
+            android:layout_width="22dp"
+            android:layout_height="21dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/virus" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
         android:id="@+id/hint2"
-        android:layout_width="60dp"
-        android:layout_height="69dp"
+        android:layout_width="45dp"
+        android:layout_height="57dp"
         android:layout_gravity="right"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/question_mark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
