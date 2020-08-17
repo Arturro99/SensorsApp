@@ -1,5 +1,6 @@
 package com.g09.levels;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.g09.MainActivity;
 import com.g09.R;
 
 import java.util.Timer;
@@ -94,7 +96,7 @@ public class Lvl1 extends Level {
             double b = stopTimer();
             f = "\nudalo sie ";
             lvl1txt.setText(String.valueOf(gyroscopeValue) + f + String.valueOf(max));
-            winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
+            winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl2.class);
             stop();
         }
     }

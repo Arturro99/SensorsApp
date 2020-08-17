@@ -88,7 +88,7 @@ public class Lvl5 extends Level {
         if(proximityValue == 0) {
             double b = stopTimer();
             f = "\nudalo sie";
-            winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
+            winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl6.class);
             stop();
         }
         lvl5txt.setText(String.valueOf(proximityValue) + " cm" + f);

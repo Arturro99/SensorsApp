@@ -1,6 +1,7 @@
 package com.g09.levels;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -56,7 +57,7 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         alertDialog.show();
     }
 
-    protected void winAlert(String title, String message) {
+    protected void winAlert(String title, String message, Class cl) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage(message)
                 .setTitle(title)
@@ -64,6 +65,8 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
                 .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         finish();
+                        if(cl != null && getFlagStart())
+                            startActivity(new Intent(getApplicationContext(), cl));
                     }
                 });
         alertDialog.show();
@@ -85,6 +88,11 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
     protected boolean getFlagTime() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getBoolean("time", false);
+    }
+
+    protected boolean getFlagStart() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getBoolean("start", false);
     }
 
     protected double startTimer() {

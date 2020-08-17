@@ -150,7 +150,7 @@ public class Lvl6 extends Level {
             } finally {
 
             }
-            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + calculateElapsedTime(a, b) + " sekund\");");
+            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + calculateElapsedTime(a, b) + " sekund\");", Lvl7.class);
             stop();
         }
     }

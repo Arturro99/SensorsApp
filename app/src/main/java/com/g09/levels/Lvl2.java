@@ -100,11 +100,8 @@ public class Lvl2 extends Level {
                         manCenterY = manY + man.getHeight() / 2.0;
 
                         if (checkInfected() && timer != null) {
-                            timer.cancel();
-                            timer.purge();
-                            timer = null;
                             stop();
-                            winAlert("Ooops", "Zostałeś zakażony");
+                            winAlert("Ooops", "Zostałeś zakażony", Lvl2.class);
                         }
                     }
                 });
@@ -122,11 +119,8 @@ public class Lvl2 extends Level {
                         i[0]++;
 
                         if(i[0] == 21 && timer != null) {
-                            timer.cancel();
-                            timer.purge();
-                            timer = null;
                             stop();
-                            winAlert("Gratulacje", "Udało Ci się przetrwać");
+                            winAlert("Gratulacje", "Udało Ci się przetrwać", Lvl3.class);
                         }
                     }
                 });
@@ -136,6 +130,8 @@ public class Lvl2 extends Level {
 
     public void stop() {
         mSensorManager.unregisterListener(this, mAccelerometer);
+        timer.cancel();
+        timer.purge();
     }
 
 
@@ -189,8 +185,9 @@ public class Lvl2 extends Level {
     }
 
     private boolean checkInfected() {
-        return (Math.abs(-manCenterX - coronaCenterX) <= 50 &&
-                Math.abs(manCenterY - coronaCenterY) <= 50);
+//        return (Math.abs(-manCenterX - coronaCenterX) <= 50 &&
+//                Math.abs(manCenterY - coronaCenterY) <= 50);
+        return false;
     }
 
     private void infectedAlert() {

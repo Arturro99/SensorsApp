@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
+import com.g09.levels.Lvl1;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,12 +20,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button startBtn = findViewById(R.id.startBTN);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveFlagStart(true);
+                startActivity(new Intent(getApplicationContext(), Lvl1.class));
+            }
+        });
+
         Button lvlBTN = (Button)findViewById(R.id.levelsBTN);
         lvlBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveFlagStart(false);
                 startActivity(new Intent(getApplicationContext(), Levels.class));
-
             }
         });
 
@@ -55,5 +66,12 @@ public class MainActivity extends AppCompatActivity {
     private boolean getFlag() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getBoolean("dark", false);
+    }
+
+    private void saveFlagStart(boolean flag) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("start", flag);
+        editor.apply();
     }
 }

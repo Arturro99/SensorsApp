@@ -120,7 +120,7 @@ public class Lvl3 extends Level {
                 double b = stopTimer();
                 where += " \nudalo sie";
                 //Tu metoda, ktora konczy level
-                winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
+                winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl4.class);
                 stop();
             }
         }

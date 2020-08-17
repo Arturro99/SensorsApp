@@ -90,7 +90,7 @@ public class Lvl4 extends Level {
         if(lightValue > 6000) {
             double b = stopTimer();
             f = "\nudalo sie";
-            winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
+            winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl5.class);
             stop();
         }
         lvl4txt.setText(String.valueOf(lightValue) + " lux" + f);
