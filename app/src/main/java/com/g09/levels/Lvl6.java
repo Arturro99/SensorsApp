@@ -42,7 +42,7 @@ public class Lvl6 extends Level {
     final Uri URI = Uri.fromFile(new File("android.resource://com.g09/raw/ouch.mp3"));
     MediaPlayer mediaPlayer;
 
-    double a, b;
+    float a, b;
 
     @Override
     protected void onCreate() {

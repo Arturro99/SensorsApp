@@ -25,7 +25,7 @@ public class Lvl5 extends Level {
     Timer timer = new Timer();
     Handler handler = new Handler();
 
-    double a;
+    float a;
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl5);
@@ -86,7 +86,7 @@ public class Lvl5 extends Level {
         proximityValue = (int) event.values[0];
         String f = "";
         if(proximityValue == 0) {
-            double b = stopTimer();
+            float b = stopTimer();
             f = "\nudalo sie";
             winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl6.class);
             stop();

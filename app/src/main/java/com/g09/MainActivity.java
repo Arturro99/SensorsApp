@@ -47,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button statsBtn = findViewById(R.id.statsBtn);
+        statsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Stats.class));
+            }
+        });
+
         Button exitBtn = (Button)findViewById(R.id.exitBTN);
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(exitIntent);
             }
         });
-
-
     }
 
 

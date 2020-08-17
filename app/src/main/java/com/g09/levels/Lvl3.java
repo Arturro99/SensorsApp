@@ -30,7 +30,7 @@ public class Lvl3 extends Level {
     private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
 
-    double a;
+    float a;
 
     Timer timer = new Timer();
     Handler handler = new Handler();
@@ -117,7 +117,7 @@ public class Lvl3 extends Level {
         if (mAzimuth >= 350 || mAzimuth <= 10) {
             where = "N";
             if(mLastAccelerometer[2] < -8) { //wartosc mLastAccelerometer[2] musi być mniejsza niż -8 (przyspieszenie ziemskie)
-                double b = stopTimer();
+                float b = stopTimer();
                 where += " \nudalo sie";
                 //Tu metoda, ktora konczy level
                 winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl4.class);

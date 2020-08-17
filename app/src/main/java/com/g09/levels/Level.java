@@ -8,14 +8,21 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.R;
+import com.g09.Stats;
+
+import org.w3c.dom.Text;
 
 public abstract class Level extends AppCompatActivity implements SensorEventListener {
+
+    protected Stats stats = new Stats();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(getFlag() ? R.style.AppThemeDark : R.style.AppThemeLight);
@@ -95,17 +102,17 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         return preferences.getBoolean("start", false);
     }
 
-    protected double startTimer() {
-        double start = System.currentTimeMillis();
+    protected float startTimer() {
+        float start = System.currentTimeMillis();
         return start;
     }
 
-    protected double stopTimer() {
-        double stop = System.currentTimeMillis();
+    protected float stopTimer() {
+        float stop = System.currentTimeMillis();
         return stop;
     }
 
-    protected double calculateElapsedTime(double a, double b) {
-        return Math.round((b - a)/10.0)/100.0;
+    protected float calculateElapsedTime(float a, float b) {
+        return Math.round((b - a)/10.0)/100;
     }
 }

@@ -27,7 +27,7 @@ public class Lvl1 extends Level {
     TextView lvl1txt;
     TextView timeTxt;
 
-    double a;
+    float a;
     Timer timer = new Timer();
     Handler handler = new Handler();
 
@@ -93,10 +93,11 @@ public class Lvl1 extends Level {
         gyroscopeValue = (int) event.values[2];
         String f = "";
         if(gyroscopeValue < -max) {
-            double b = stopTimer();
+            float b = stopTimer();
             f = "\nudalo sie ";
             lvl1txt.setText(String.valueOf(gyroscopeValue) + f + String.valueOf(max));
             winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl2.class);
+            stats.updateScores(calculateElapsedTime(a, b), "stats1");
             stop();
         }
     }

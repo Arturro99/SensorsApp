@@ -27,7 +27,7 @@ public class Lvl4 extends Level {
     Timer timer = new Timer();
     Handler handler = new Handler();
 
-    double a;
+    float a;
 
     @Override
     public void onCreate() {
@@ -88,7 +88,7 @@ public class Lvl4 extends Level {
         lightValue = (int) sensorEvent.values[0];
         String f = "";
         if(lightValue > 6000) {
-            double b = stopTimer();
+            float b = stopTimer();
             f = "\nudalo sie";
             winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl5.class);
             stop();
