@@ -31,7 +31,7 @@ public class Lvl2 extends Level {
     double x,y,z;
     double a;
     //Frame
-    private ConstraintLayout gameLayout;
+    private FrameLayout gameLayout;
     private int frameHeight, frameWidth, initialFrameWidth;
 
     //Image
@@ -66,29 +66,27 @@ public class Lvl2 extends Level {
         frameWidth = gameLayout.getWidth();
         frameHeight = gameLayout.getHeight();
 
-
+        //coronaY = 1000;
 
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showHint("Na razie dupa z tym poziomem.");
+                showHint("Przetrwaj 20 sekund w morderczej walce z koronawirusem.");
             }
         });
 
         start();
-        a = startTimer();
     }
 
     public void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) {
             noSensorsAlert();
-        }
-        else {
+        } else {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
         }
 
-         android.os.Handler handler = new android.os.Handler();
+        android.os.Handler handler = new android.os.Handler();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -96,13 +94,44 @@ public class Lvl2 extends Level {
                     @Override
                     public void run() {
                         move();
-                         coronaCenterY = coronaY + corona.getHeight() / 2.0;
-                         coronaCenterX = coronaX + corona.getWidth() / 2.0;
+                        coronaCenterY = coronaY + corona.getHeight() / 2.0;
+                        coronaCenterX = coronaX + corona.getWidth() / 2.0;
+                        manCenterX = manX + man.getWidth() / 2.0;
+                        manCenterY = manY + man.getHeight() / 2.0;
+
+                        if (checkInfected() && timer != null) {
+                            timer.cancel();
+                            timer.purge();
+                            timer = null;
+                            stop();
+                            winAlert("Ooops", "Zostałeś zakażony");
+                        }
                     }
                 });
             }
         }, 0, 10);
 
+        final int[] i = {1};
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        timeTxt.setText(String.valueOf(i[0]));
+                        i[0]++;
+
+                        if(i[0] == 21 && timer != null) {
+                            timer.cancel();
+                            timer.purge();
+                            timer = null;
+                            stop();
+                            winAlert("Gratulacje", "Udało Ci się przetrwać");
+                        }
+                    }
+                });
+            }
+        }, 0, 1000);
     }
 
     public void stop() {
@@ -127,16 +156,11 @@ public class Lvl2 extends Level {
         if(man.getX() - a + man.getWidth() <= gameLayout.getWidth() && man.getX() - a >= 0) {
             manX += a;
             man.setX(-manX);
-            manCenterX = manX + man.getWidth() / 2.0;
         }
         if(man.getY() + b + man.getHeight() <= gameLayout.getHeight() && man.getY() + b >= 0) {
             manY += b;
             man.setY(manY);
-            manCenterY = manY + man.getHeight() / 2.0;
         }
-
-            timeTxt.setText("manX: " + manCenterX + "\tmanY: " + manCenterY +
-                    "coronaX: " + coronaCenterX + "\tcoronaY: " + coronaCenterY);
 
     }
 
@@ -162,19 +186,11 @@ public class Lvl2 extends Level {
 
         corona.setY(coronaY);
         corona.setX(coronaX);
-
-        if(checkInfected() && timer != null) {
-            timer.cancel();
-            timer.purge();
-            timer = null;
-            stop();
-            infectedAlert();
-        }
     }
 
     private boolean checkInfected() {
-        return (manCenterX - coronaCenterX <= 5 &&
-                manCenterY - coronaCenterY <= 5);
+        return (Math.abs(-manCenterX - coronaCenterX) <= 50 &&
+                Math.abs(manCenterY - coronaCenterY) <= 50);
     }
 
     private void infectedAlert() {

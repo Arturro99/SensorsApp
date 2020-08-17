@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="400dp"
         android:layout_height="655dp"
@@ -50,16 +50,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/virus" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
     <ImageButton
         android:id="@+id/hint2"
         android:layout_width="45dp"
         android:layout_height="57dp"
         android:layout_gravity="right"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/question_mark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
