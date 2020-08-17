@@ -5,12 +5,16 @@ import android.annotation.SuppressLint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.g09.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 //Magnetometr			AK09911 3-axis Magnetic field sensor		Góra telefonu ma wskazywać północ
 
@@ -20,6 +24,7 @@ public class Lvl3 extends Level {
     int mAzimuth;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer, mMagnetometer;
+    private TextView timeTxt;
     float[] rMat = new float[9];
     float[] orientation = new float[3];
     private float[] mLastAccelerometer = new float[3];
@@ -27,12 +32,16 @@ public class Lvl3 extends Level {
 
     double a;
 
+    Timer timer = new Timer();
+    Handler handler = new Handler();
+
 
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl3);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         txt_compass = (TextView) findViewById(R.id.txt_azimuth);
+        timeTxt = findViewById(R.id.time3);
         if(getFlag()){
             ImageView lvl3img = (ImageView) findViewById(R.id.lvl3img);
             lvl3img.setImageResource(R.drawable.lvl3imgwhite);
@@ -59,12 +68,31 @@ public class Lvl3 extends Level {
             mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
             mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_UI);
         }
+
+        if(getFlagTime()) {
+            final int[] i = {0};
+            timeTxt.setVisibility(View.VISIBLE);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            timeTxt.setText(String.valueOf(i[0]));
+                            i[0]++;
+                        }
+                    });
+                }
+            }, 0, 1000);
+        }
     }
 
 
     public void stop() {
         mSensorManager.unregisterListener(this,mAccelerometer);
         mSensorManager.unregisterListener(this,mMagnetometer);
+        timer.cancel();
+        timer.purge();
     }
 
 
@@ -92,8 +120,8 @@ public class Lvl3 extends Level {
                 double b = stopTimer();
                 where += " \nudalo sie";
                 //Tu metoda, ktora konczy level
-                winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
-                onPause();
+                winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
+                stop();
             }
         }
         if (mAzimuth < 350 && mAzimuth > 280)

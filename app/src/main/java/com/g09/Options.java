@@ -36,18 +36,12 @@ public class Options extends AppCompatActivity {
         darkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                OperateOnXml operateOnXml = new OperateOnXml();
                 if(compoundButton.isChecked()) {
                     saveFlag(true);
                     Intent intent = new Intent(Options.this, MainActivity.class);
                     startActivity(intent);
                     Intent intent2 = new Intent(Options.this, Options.class);
                     startActivity(intent2);
-                    try {
-                        operateOnXml.saveToXmlFile("config.xml", this);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
                 else {
                     saveFlag(false);
@@ -55,11 +49,28 @@ public class Options extends AppCompatActivity {
                     startActivity(intent);
                     Intent intent2 = new Intent(Options.this, Options.class);
                     startActivity(intent2);
-                    try {
-                        operateOnXml.saveToXmlFile("config.xml", this);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                }
+                finish();
+            }
+        });
+
+        showTime.setChecked(getFlagTime());
+        showTime.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()) {
+                    saveFlagTime(true);
+                    Intent intent = new Intent(Options.this, MainActivity.class);
+                    startActivity(intent);
+                    Intent intent2 = new Intent(Options.this, Options.class);
+                    startActivity(intent2);
+                }
+                else {
+                    saveFlagTime(false);
+                    Intent intent = new Intent(Options.this, MainActivity.class);
+                    startActivity(intent);
+                    Intent intent2 = new Intent(Options.this, Options.class);
+                    startActivity(intent2);
                 }
                 finish();
             }
@@ -75,5 +86,17 @@ public class Options extends AppCompatActivity {
     private boolean getFlag() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getBoolean("dark", false);
+    }
+
+    private void saveFlagTime(boolean flag) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("time", flag);
+        editor.apply();
+    }
+
+    private boolean getFlagTime() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getBoolean("time", false);
     }
 }

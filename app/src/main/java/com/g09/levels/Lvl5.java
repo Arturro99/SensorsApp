@@ -3,11 +3,15 @@ package com.g09.levels;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.g09.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 //Czujnik zbliżeniowy		Proximity sensor				Trzeba zbliżyć się do telefonu (czujnika)
 
@@ -16,6 +20,10 @@ public class Lvl5 extends Level {
     private Sensor mProximitySensor;
     int proximityValue;
     TextView lvl5txt;
+    TextView timeTxt;
+
+    Timer timer = new Timer();
+    Handler handler = new Handler();
 
     double a;
     @Override
@@ -23,6 +31,7 @@ public class Lvl5 extends Level {
         setContentView(R.layout.lvl5);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lvl5txt = (TextView)findViewById(R.id.lvl5txt);
+        timeTxt = findViewById(R.id.time5);
         ImageButton hint = findViewById(R.id.hint5);
 
         hint.setOnClickListener(new View.OnClickListener() {
@@ -44,11 +53,30 @@ public class Lvl5 extends Level {
             mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
             mSensorManager.registerListener(this, mProximitySensor, SensorManager.SENSOR_DELAY_UI);
         }
+
+        if(getFlagTime()) {
+            final int[] i = {0};
+            timeTxt.setVisibility(View.VISIBLE);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            timeTxt.setText(String.valueOf(i[0]));
+                            i[0]++;
+                        }
+                    });
+                }
+            }, 0, 1000);
+        }
     }
 
 
     public void stop() {
         mSensorManager.unregisterListener(this,mProximitySensor);
+        timer.cancel();
+        timer.purge();
     }
 
 
@@ -60,8 +88,8 @@ public class Lvl5 extends Level {
         if(proximityValue == 0) {
             double b = stopTimer();
             f = "\nudalo sie";
-            winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
-            onPause();
+            winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund");
+            stop();
         }
         lvl5txt.setText(String.valueOf(proximityValue) + " cm" + f);
     }

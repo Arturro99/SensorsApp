@@ -20,6 +20,18 @@
         app:layout_constraintVertical_bias="0.107" />
 
     <TextView
+        android:id="@+id/time5"
+        android:layout_width="14dp"
+        android:layout_height="28dp"
+        android:text="0"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/lvl5txt"
+        app:layout_constraintEnd_toEndOf="@+id/hint5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

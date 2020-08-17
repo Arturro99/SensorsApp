@@ -82,6 +82,11 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         return preferences.getBoolean("dark", false);
     }
 
+    protected boolean getFlagTime() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getBoolean("time", false);
+    }
+
     protected double startTimer() {
         double start = System.currentTimeMillis();
         return start;

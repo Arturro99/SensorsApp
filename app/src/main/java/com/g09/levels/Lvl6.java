@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.g09.R;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 //Przyspieszenie liniowe		iNemo Linear Acceleration sensor		Telefon musi się znaleźc w spadku swobodnym
 //+wektor rotacji
@@ -27,9 +29,12 @@ public class Lvl6 extends Level {
     TextView lvl6txt;
     TextView help;
     TextView maxLinearAcc;
-    TextView linearAcc;
+    TextView timeTxt;
     boolean done = false;
     float initialPressureValue = 0;
+
+    Timer timer = new Timer();
+    Handler handler = new Handler();
 
     boolean enoughAcceleration = false;
     boolean enoughPressure = false;
@@ -47,6 +52,7 @@ public class Lvl6 extends Level {
         lvl6txt = findViewById(R.id.lvl6txt);
         help = findViewById(R.id.help);
         maxLinearAcc = findViewById(R.id.maxLinearAcc);
+        timeTxt = findViewById(R.id.time6);
         ImageButton hint = findViewById(R.id.hint6);
 
         hint.setOnClickListener(new View.OnClickListener() {
@@ -70,10 +76,28 @@ public class Lvl6 extends Level {
             mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
         }
 
+        if(getFlagTime()) {
+            final int[] i = {0};
+            timeTxt.setVisibility(View.VISIBLE);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            timeTxt.setText(String.valueOf(i[0]));
+                            i[0]++;
+                        }
+                    });
+                }
+            }, 0, 1000);
+        }
     }
     public void stop() {
         mSensorManager.unregisterListener(this, mLinearAcceleration);
         mSensorManager.unregisterListener(this, mPressure);
+        timer.cancel();
+        timer.purge();
     }
 
 
@@ -126,7 +150,8 @@ public class Lvl6 extends Level {
             } finally {
 
             }
-            winAlert("Gratulację!", "...and belief is all what's left.\nTwój czas: " + calculateElapsedTime(a, b) + " sekund\");");
+            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + calculateElapsedTime(a, b) + " sekund\");");
+            stop();
         }
     }
 
