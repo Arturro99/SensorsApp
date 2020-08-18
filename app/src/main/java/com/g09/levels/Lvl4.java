@@ -1,16 +1,17 @@
 package com.g09.levels;
 
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.g09.R;
 
-import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,7 +28,9 @@ public class Lvl4 extends Level {
     Timer timer = new Timer();
     Handler handler = new Handler();
 
-    float a;
+    SharedPreferences sharedPreferences;
+
+    double a;
 
     @Override
     public void onCreate() {
@@ -36,6 +39,7 @@ public class Lvl4 extends Level {
         lvl4txt = (TextView)findViewById(R.id.lvl4txt);
         timeTxt = findViewById(R.id.time4);
         ImageButton hint = findViewById(R.id.hint4);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,9 +92,17 @@ public class Lvl4 extends Level {
         lightValue = (int) sensorEvent.values[0];
         String f = "";
         if(lightValue > 6000) {
-            float b = stopTimer();
+            double b = stopTimer();
             f = "\nudalo sie";
             winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl5.class);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putFloat("stats4", (float)calculateElapsedTime(a, b));
+            editor.apply();
+            if(getScore("stats4") < getCurrentHighScore("stats4CurrentHS"))
+                editor.putFloat("stats4CurrentHS", (float)calculateElapsedTime(a, b));
+            editor.apply();
+
             stop();
         }
         lvl4txt.setText(String.valueOf(lightValue) + " lux" + f);

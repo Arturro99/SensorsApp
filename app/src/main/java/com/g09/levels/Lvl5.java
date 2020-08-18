@@ -1,9 +1,11 @@
 package com.g09.levels;
 
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,7 +27,10 @@ public class Lvl5 extends Level {
     Timer timer = new Timer();
     Handler handler = new Handler();
 
-    float a;
+    SharedPreferences sharedPreferences;
+
+    double a;
+
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl5);
@@ -33,6 +38,7 @@ public class Lvl5 extends Level {
         lvl5txt = (TextView)findViewById(R.id.lvl5txt);
         timeTxt = findViewById(R.id.time5);
         ImageButton hint = findViewById(R.id.hint5);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +92,17 @@ public class Lvl5 extends Level {
         proximityValue = (int) event.values[0];
         String f = "";
         if(proximityValue == 0) {
-            float b = stopTimer();
+            double b = stopTimer();
             f = "\nudalo sie";
             winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl6.class);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putFloat("stats5", (float)calculateElapsedTime(a, b));
+            editor.apply();
+            if(getScore("stats5") < getCurrentHighScore("stats5CurrentHS"))
+                editor.putFloat("stats5CurrentHS", (float)calculateElapsedTime(a, b));
+            editor.apply();
+
             stop();
         }
         lvl5txt.setText(String.valueOf(proximityValue) + " cm" + f);

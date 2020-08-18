@@ -21,8 +21,6 @@ import org.w3c.dom.Text;
 
 public abstract class Level extends AppCompatActivity implements SensorEventListener {
 
-    protected Stats stats = new Stats();
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(getFlag() ? R.style.AppThemeDark : R.style.AppThemeLight);
@@ -102,17 +100,26 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         return preferences.getBoolean("start", false);
     }
 
-    protected float startTimer() {
-        float start = System.currentTimeMillis();
-        return start;
+    protected float getCurrentHighScore(String statsNumberCurrentHighScore) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getFloat(statsNumberCurrentHighScore, 900f);
     }
 
-    protected float stopTimer() {
-        float stop = System.currentTimeMillis();
-        return stop;
+    protected float getScore(String statsNumber) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getFloat(statsNumber, 0.0f);
     }
 
-    protected float calculateElapsedTime(float a, float b) {
-        return Math.round((b - a)/10.0)/100;
+    protected double startTimer() {
+        return System.currentTimeMillis();
+    }
+
+    protected double stopTimer() {
+        return System.currentTimeMillis();
+    }
+
+    protected double calculateElapsedTime(double a, double b) {
+        return Math.round((b - a)/10.0)/100.0;
+//        throw new IllegalStateException (String.valueOf(b-a));
     }
 }

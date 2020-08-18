@@ -2,10 +2,12 @@ package com.g09.levels;
 
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,11 +32,12 @@ public class Lvl3 extends Level {
     private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
 
-    float a;
+    double a;
 
     Timer timer = new Timer();
     Handler handler = new Handler();
 
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate() {
@@ -42,6 +45,7 @@ public class Lvl3 extends Level {
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         txt_compass = (TextView) findViewById(R.id.txt_azimuth);
         timeTxt = findViewById(R.id.time3);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         if(getFlag()){
             ImageView lvl3img = (ImageView) findViewById(R.id.lvl3img);
             lvl3img.setImageResource(R.drawable.lvl3imgwhite);
@@ -117,10 +121,18 @@ public class Lvl3 extends Level {
         if (mAzimuth >= 350 || mAzimuth <= 10) {
             where = "N";
             if(mLastAccelerometer[2] < -8) { //wartosc mLastAccelerometer[2] musi być mniejsza niż -8 (przyspieszenie ziemskie)
-                float b = stopTimer();
+                double b = stopTimer();
                 where += " \nudalo sie";
                 //Tu metoda, ktora konczy level
                 winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl4.class);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putFloat("stats3", (float)calculateElapsedTime(a, b));
+                editor.apply();
+                if(getScore("stats3") < getCurrentHighScore("stats3CurrentHS"))
+                    editor.putFloat("stats3CurrentHS", (float)calculateElapsedTime(a, b));
+                editor.apply();
+
                 stop();
             }
         }

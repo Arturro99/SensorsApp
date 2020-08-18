@@ -1,11 +1,13 @@
 package com.g09.levels;
 
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -42,7 +44,9 @@ public class Lvl6 extends Level {
     final Uri URI = Uri.fromFile(new File("android.resource://com.g09/raw/ouch.mp3"));
     MediaPlayer mediaPlayer;
 
-    float a, b;
+    SharedPreferences sharedPreferences;
+
+    double a, b;
 
     @Override
     protected void onCreate() {
@@ -54,6 +58,7 @@ public class Lvl6 extends Level {
         maxLinearAcc = findViewById(R.id.maxLinearAcc);
         timeTxt = findViewById(R.id.time6);
         ImageButton hint = findViewById(R.id.hint6);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +155,15 @@ public class Lvl6 extends Level {
             } finally {
 
             }
-            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + calculateElapsedTime(a, b) + " sekund\");", Lvl7.class);
+            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + calculateElapsedTime((float)a, (float)b) + " sekund\");", Lvl7.class);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putFloat("stats6", (float)calculateElapsedTime(a, b));
+            editor.apply();
+            if(getScore("stats6") < getCurrentHighScore("stats6CurrentHS"))
+                editor.putFloat("stats6CurrentHS", (float)calculateElapsedTime(a, b));
+            editor.apply();
+
             stop();
         }
     }

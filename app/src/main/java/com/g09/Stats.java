@@ -1,5 +1,7 @@
 package com.g09;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -9,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class Stats extends AppCompatActivity {
@@ -20,9 +23,11 @@ public class Stats extends AppCompatActivity {
     TextView stats5;
     TextView stats6;
     TextView stats7;
+    Button resetStatsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(getFlag() ? R.style.AppThemeDark : R.style.AppThemeLight);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
@@ -33,78 +38,46 @@ public class Stats extends AppCompatActivity {
         stats5 = findViewById(R.id.stats5);
         stats6 = findViewById(R.id.stats6);
         stats7 = findViewById(R.id.stats7);
+        resetStatsBtn = findViewById(R.id.resetScores);
 
-        stats1.setText(String.valueOf(getHighScore("stats1")));
-        stats2.setText(String.valueOf(getHighScore("stats2")));
-        stats3.setText(String.valueOf(getHighScore("stats3")));
-        stats4.setText(String.valueOf(getHighScore("stats4")));
-        stats5.setText(String.valueOf(getHighScore("stats5")));
-        stats6.setText(String.valueOf(getHighScore("stats6")));
-        stats7.setText(String.valueOf(getHighScore("stats7")));
+        refreshScores();
+
+        resetStatsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetStats();
+                Intent intent = new Intent(Stats.this, MainActivity.class);
+                startActivity(intent);
+                Intent intent2 = new Intent(Stats.this, Stats.class);
+                startActivity(intent2);
+            }
+        });
 
     }
 
-    private float getHighScore(String statsNumber) {
+    private float getHighScore(String statsNumberCurrentHS) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        return preferences.getFloat(statsNumber, 0);
+        return preferences.getFloat(statsNumberCurrentHS, 900);
     }
 
-    public void updateScores(float score, String statsNumber) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = preferences.edit();
 
-        switch(statsNumber) {
-            case "stats1": {
-                if(score < Float.parseFloat(stats1.getText().toString()) || Float.parseFloat(stats1.getText().toString()) == 0.0 ) {
-                    editor.putFloat(statsNumber, score);
-                    editor.apply();
-                }
-                break;
-            }
-            case "stats2": {
-                if(score < Float.parseFloat(stats2.getText().toString()) || Float.parseFloat(stats2.getText().toString()) == 0.0 ) {
-                    editor.putFloat(statsNumber, score);
-                    editor.apply();
-                }
-                break;
-            }
-            case "stats3": {
-                if(score < Float.parseFloat(stats3.getText().toString()) || Float.parseFloat(stats3.getText().toString()) == 0.0 ) {
-                    editor.putFloat(statsNumber, score);
-                    editor.apply();
-                }
-                break;
-            }
-            case "stats4": {
-                if(score < Float.parseFloat(stats4.getText().toString()) || Float.parseFloat(stats4.getText().toString()) == 0.0 ) {
-                    editor.putFloat(statsNumber, score);
-                    editor.apply();
-                }
-                break;
-            }
-            case "stats5": {
-                if(score < Float.parseFloat(stats5.getText().toString()) || Float.parseFloat(stats5.getText().toString()) == 0.0 ) {
-                    editor.putFloat(statsNumber, score);
-                    editor.apply();
-                }
-                break;
-            }
-            case "stats6": {
-                if(score < Float.parseFloat(stats6.getText().toString()) || Float.parseFloat(stats6.getText().toString()) == 0.0 ) {
-                    editor.putFloat(statsNumber, score);
-                    editor.apply();
-                }
-                break;
-            }
-            case "stats7": {
-                if(score < Float.parseFloat(stats7.getText().toString()) || Float.parseFloat(stats7.getText().toString()) == 0.0 ) {
-                    editor.putFloat(statsNumber, score);
-                    editor.apply();
-                }
-                break;
-            }
-            default:
-                throw new IllegalStateException("Unexpected value: " + statsNumber);
-        }
+    public void refreshScores() {
+        stats1.setText(String.valueOf(getHighScore("stats1CurrentHS")));
+        stats2.setText(String.valueOf(getHighScore("stats2CurrentHS")));
+        stats3.setText(String.valueOf(getHighScore("stats3CurrentHS")));
+        stats4.setText(String.valueOf(getHighScore("stats4CurrentHS")));
+        stats5.setText(String.valueOf(getHighScore("stats5CurrentHS")));
+        stats6.setText(String.valueOf(getHighScore("stats6CurrentHS")));
+        stats7.setText(String.valueOf(getHighScore("stats7CurrentHS")));
+    }
+
+    private void resetStats() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.edit().clear().apply();
+    }
+
+    private boolean getFlag() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getBoolean("dark", false);
     }
 }

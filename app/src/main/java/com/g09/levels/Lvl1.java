@@ -1,10 +1,12 @@
 package com.g09.levels;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,9 +29,11 @@ public class Lvl1 extends Level {
     TextView lvl1txt;
     TextView timeTxt;
 
-    float a;
+    double a;
     Timer timer = new Timer();
     Handler handler = new Handler();
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate() {
@@ -39,6 +43,8 @@ public class Lvl1 extends Level {
         timeTxt = findViewById(R.id.time1);
         ImageButton hint = findViewById(R.id.hint1);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,8 +52,8 @@ public class Lvl1 extends Level {
             }
         });
 
-        start();
         a = startTimer();
+        start();
     }
 
     public void start() {
@@ -60,7 +66,7 @@ public class Lvl1 extends Level {
             if(max*0.9 < 30)
                 max *= 0.9;
             else
-                max = 10;
+                max = 5;
             mSensorManager.registerListener(this, mGyroscopeSensor, SensorManager.SENSOR_DELAY_UI);
         }
 
@@ -93,11 +99,18 @@ public class Lvl1 extends Level {
         gyroscopeValue = (int) event.values[2];
         String f = "";
         if(gyroscopeValue < -max) {
-            float b = stopTimer();
+            double b = stopTimer();
             f = "\nudalo sie ";
             lvl1txt.setText(String.valueOf(gyroscopeValue) + f + String.valueOf(max));
             winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl2.class);
-            stats.updateScores(calculateElapsedTime(a, b), "stats1");
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putFloat("stats1", (float)calculateElapsedTime(a, b));
+            editor.apply();
+            if(getScore("stats1") < getCurrentHighScore("stats1CurrentHS"))
+                editor.putFloat("stats1CurrentHS", (float)calculateElapsedTime(a, b));
+            editor.apply();
+
             stop();
         }
     }

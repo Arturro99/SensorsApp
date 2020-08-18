@@ -1,6 +1,5 @@
 package com.g09.levels;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -9,19 +8,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.g09.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 //Akcelerometr			LSM330 3-axis accelerometer			Trzeba telefon ustawić pod odpowiednim kątem
 
@@ -53,6 +47,8 @@ public class Lvl2 extends Level {
     boolean goingForwardY = true;
     boolean goingForwardX = true;
     Timer timer = new Timer();
+
+
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl2);

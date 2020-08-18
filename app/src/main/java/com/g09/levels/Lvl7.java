@@ -1,11 +1,8 @@
 package com.g09.levels;
 
-import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorManager;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.g09.R;
 //Oczyt baterii									Odczytujemy prędkość ładowania baterii i gracz musi
@@ -13,6 +10,10 @@ import com.g09.R;
 //										        (będzie miał 4 odpowiedzi do wyboru)
 
 public class Lvl7 extends Level {
+//    public Lvl7(MyCallBack callBack) {
+//        super(callBack);
+//    }
+
     @Override
     public void onCreate() {
         setContentView(R.layout.lvl7);
