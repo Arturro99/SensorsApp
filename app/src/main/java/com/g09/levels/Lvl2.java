@@ -13,56 +13,76 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.g09.R;
+import com.g09.Virus;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 //Akcelerometr			LSM330 3-axis accelerometer			Trzeba telefon ustawić pod odpowiednim kątem
 
 public class Lvl2 extends Level {
+
+    //Stuff for sensors
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     double x,y,z;
-    double a;
+
     //Frame
     private FrameLayout gameLayout;
-    private int frameHeight, frameWidth, initialFrameWidth;
 
     //Image
     private ImageView man;
-    private ImageView corona;
+    private ImageView coronaImg1;
+    private ImageView coronaImg2;
+    private ImageView coronaImg3;
+    private ArrayList<ImageView>listOfVirusesImg = new ArrayList<ImageView>();
 
     //Position
     private float manX, manY;
-    private float coronaX, coronaY;
+    private float[] coronaX = new float[3];
+    private float[] coronaY = new float[3];
 
-    //Size
+    //Centres
     private double manCenterX;
     private double manCenterY;
-    private double coronaCenterX;
-    private double coronaCenterY;
+    private double[] coronaCenterX = new double[3];
+    private double[] coronaCenterY = new double[3];
 
-    TextView timeTxt;
-
+    //Change moving direction
     boolean goingForwardY = true;
     boolean goingForwardX = true;
+
+    TextView timeTxt;
     Timer timer = new Timer();
+
+    private Virus corona1 = new Virus("corona1");
+    private Virus corona2 = new Virus("corona2");
+    private Virus corona3 = new Virus("corona3");
+    private ArrayList<Virus>listOfViruses = new ArrayList<Virus>();
 
 
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl2);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        //lvl2txt = (TextView)findViewById(R.id.lvl2txt);
+
         timeTxt = findViewById(R.id.time2);
         ImageButton hint = findViewById(R.id.hint2);
         gameLayout = findViewById(R.id.frameLayout);
-        man = findViewById(R.id.man);
-        corona = findViewById(R.id.virus);
-        frameWidth = gameLayout.getWidth();
-        frameHeight = gameLayout.getHeight();
 
-        //coronaY = 1000;
+        man = findViewById(R.id.man);
+        coronaImg1 = findViewById(R.id.corona1);
+        coronaImg2 = findViewById(R.id.corona2);
+        coronaImg3 = findViewById(R.id.corona3);
+
+        listOfVirusesImg.add(coronaImg1);
+        listOfVirusesImg.add(coronaImg2);
+        listOfVirusesImg.add(coronaImg3);
+
+        listOfViruses.add(corona1);
+        listOfViruses.add(corona2);
+        listOfViruses.add(corona3);
 
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +102,7 @@ public class Lvl2 extends Level {
             mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
         }
 
+        //Wątek obsługujący ruch wirusów
         android.os.Handler handler = new android.os.Handler();
         timer.schedule(new TimerTask() {
             @Override
@@ -89,9 +110,11 @@ public class Lvl2 extends Level {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        move();
-                        coronaCenterY = coronaY + corona.getHeight() / 2.0;
-                        coronaCenterX = coronaX + corona.getWidth() / 2.0;
+                        moveVirus();
+                        for(int i = 0; i < listOfVirusesImg.size(); i++) {
+                            coronaCenterY[i] = coronaY[i] + listOfVirusesImg.get(i).getHeight() / 2.0;
+                            coronaCenterX[i] = coronaX[i] + listOfVirusesImg.get(i).getWidth() / 2.0;
+                        }
                         manCenterX = manX + man.getWidth() / 2.0;
                         manCenterY = manY + man.getHeight() / 2.0;
 
@@ -143,8 +166,6 @@ public class Lvl2 extends Level {
         int a = (int) (pitch * (180.0/3.14));
         int b = (int) (roll * (180.0/3.14)) ;
 
-        //lvl2txt.setText(String.valueOf(a) + "°  " + String.valueOf(b) + "°");
-
         if(man.getX() - a + man.getWidth() <= gameLayout.getWidth() && man.getX() - a >= 0) {
             manX += a;
             man.setX(-manX);
@@ -153,50 +174,58 @@ public class Lvl2 extends Level {
             manY += b;
             man.setY(manY);
         }
-
     }
 
-    private void move() {
+    private void moveVirus() {
+        for(int i = 0; i < listOfVirusesImg.size(); i++) {
+            coronaY[i] = listOfVirusesImg.get(i).getY();
+            coronaX[i] = listOfVirusesImg.get(i).getX();
+        }
         long speedY = Math.round(Math.random()*15)+1;
         long speedX = Math.round(Math.random()*5)+1;
 
-        if(corona.getY() >= gameLayout.getHeight()) goingForwardY = false;
-        else if(corona.getY() <= 0) goingForwardY = true;
+        for(int i = 0; i < listOfViruses.size(); i++) {
+            if(listOfVirusesImg.get(i).getY() + listOfViruses.get(i).getSpeedY() + listOfVirusesImg.get(i).getHeight() >= gameLayout.getHeight())
+                listOfViruses.get(i).setGoingForwardY(false);
+            else if(listOfVirusesImg.get(i).getY() + listOfViruses.get(i).getSpeedY() <= 0)
+                listOfViruses.get(i).setGoingForwardY(true);
 
-        if(corona.getX() >= gameLayout.getWidth()) goingForwardX = false;
-        else if(corona.getX() <= 0) goingForwardX = true;
+            if(listOfVirusesImg.get(i).getX() + listOfViruses.get(i).getSpeedX() + listOfVirusesImg.get(i).getWidth() >= gameLayout.getWidth())
+                listOfViruses.get(i).setGoingForwardX(false);
+            else if(listOfVirusesImg.get(i).getX() + listOfViruses.get(i).getSpeedX() <= 0)
+                listOfViruses.get(i).setGoingForwardX(true);
+        }
 
-        if(goingForwardY)
-            coronaY += speedY;
-        else
-            coronaY -= speedY;
+//        if(corona1.getY() + speedY + corona1.getHeight() >= gameLayout.getHeight()) goingForwardY = false;
+//        else if(corona1.getY() + speedY <= 0) goingForwardY = true;
+//
+//        if(corona1.getX() + speedX + corona1.getWidth() >= gameLayout.getWidth()) goingForwardX = false;
+//        else if(corona1.getX() + speedX <= 0) goingForwardX = true;
 
-        if(goingForwardX)
-            coronaX += speedX;
-        else
-            coronaX -= speedX;
+        for(int i = 0; i < listOfViruses.size(); i++) {
+            if (listOfViruses.get(i).isGoingForwardY())
+                coronaY[i] += listOfViruses.get(i).getSpeedY();
+            else
+                coronaY[i] -= listOfViruses.get(i).getSpeedY();
 
-        corona.setY(coronaY);
-        corona.setX(coronaX);
+            if (listOfViruses.get(i).isGoingForwardX())
+                coronaX[i] += listOfViruses.get(i).getSpeedX();
+            else
+                coronaX[i] -= listOfViruses.get(i).getSpeedX();
+        }
+
+        for(int i = 0; i < listOfVirusesImg.size(); i++) {
+            listOfVirusesImg.get(i).setY(coronaY[i]);
+            listOfVirusesImg.get(i).setX(coronaX[i]);
+        }
     }
 
     private boolean checkInfected() {
-//        return (Math.abs(-manCenterX - coronaCenterX) <= 50 &&
-//                Math.abs(manCenterY - coronaCenterY) <= 50);
+        for(int i = 0; i < coronaCenterY.length; i++) {
+            if (Math.abs(-manCenterX - coronaCenterX[i]) <= 50 &&
+                    Math.abs(manCenterY - coronaCenterY[i]) <= 50)
+                return true;
+        }
         return false;
     }
-
-    private void infectedAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage("Niestety, zostałeś zakażony...")
-                .setTitle("Oooops")
-                .setCancelable(false)
-                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                            finish();
-                    }
-                });
-        alertDialog.show();
-    }
-
 }
