@@ -86,6 +86,16 @@
                 android:layout_height="5dp" />
 
             <Button
+                android:id="@+id/lvl6v2BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 6v2" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
                 android:id="@+id/lvl7BTN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

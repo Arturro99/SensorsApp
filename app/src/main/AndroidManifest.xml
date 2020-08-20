@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".levels.Lvl6v2"
+            android:label="@string/title_activity_lvl6v2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Stats"
             android:label="@string/title_activity_stats"
             android:theme="@style/AppTheme.NoActionBar" />
