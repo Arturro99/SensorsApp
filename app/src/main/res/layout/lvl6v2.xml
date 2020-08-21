@@ -32,12 +32,36 @@
         android:id="@id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="Pokaż swoje nerwy."
-        android:textSize="10dp"
+        android:text="Ciekawe jak byś funkcjonował w świecie do góry nogami..."
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/achievedValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/time6v2"
+        app:layout_constraintVertical_bias="0.599" />
+
+    <TextView
+        android:id="@+id/currentValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/time6v2"
+        app:layout_constraintVertical_bias="0.671" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
