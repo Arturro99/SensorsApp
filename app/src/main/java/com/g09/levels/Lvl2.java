@@ -118,7 +118,7 @@ public class Lvl2 extends Level {
                         manCenterX = manX + man.getWidth() / 2.0;
                         manCenterY = manY + man.getHeight() / 2.0;
 
-                        if (checkInfected() && timer != null) {
+                        if (checkInfected() && timer == null) {
                             stop();
                             winAlert("Ooops", "Zostałeś zakażony", Lvl2.class);
                         }
@@ -167,8 +167,8 @@ public class Lvl2 extends Level {
         int b = (int) (roll * (180.0/3.14)) ;
 
         if(man.getX() - a + man.getWidth() <= gameLayout.getWidth() && man.getX() - a >= 0) {
-            manX += a;
-            man.setX(-manX);
+            manX -= a;
+            man.setX(manX);
         }
         if(man.getY() + b + man.getHeight() <= gameLayout.getHeight() && man.getY() + b >= 0) {
             manY += b;
@@ -177,12 +177,14 @@ public class Lvl2 extends Level {
     }
 
     private void moveVirus() {
+        timeTxt.setText(String.valueOf("ManX i ManY: " + manCenterX + "\t" + manCenterY +
+                "\nCorona1 X i Y: " + coronaCenterX[0] + "\t" + coronaCenterY[0] +
+                "\nCorona2 X i Y: " + coronaCenterX[1] + "\t" + coronaCenterY[1] +
+                "\nCorona3 X i Y: " + coronaCenterX[2] + "\t" + coronaCenterY[2]));
         for(int i = 0; i < listOfVirusesImg.size(); i++) {
             coronaY[i] = listOfVirusesImg.get(i).getY();
             coronaX[i] = listOfVirusesImg.get(i).getX();
         }
-        long speedY = Math.round(Math.random()*15)+1;
-        long speedX = Math.round(Math.random()*5)+1;
 
         for(int i = 0; i < listOfViruses.size(); i++) {
             if(listOfVirusesImg.get(i).getY() + listOfViruses.get(i).getSpeedY() + listOfVirusesImg.get(i).getHeight() >= gameLayout.getHeight())
@@ -222,7 +224,7 @@ public class Lvl2 extends Level {
 
     private boolean checkInfected() {
         for(int i = 0; i < coronaCenterY.length; i++) {
-            if (Math.abs(-manCenterX - coronaCenterX[i]) <= 50 &&
+            if (Math.abs(manCenterX - coronaCenterX[i]) <= 50 &&
                     Math.abs(manCenterY - coronaCenterY[i]) <= 50)
                 return true;
         }
