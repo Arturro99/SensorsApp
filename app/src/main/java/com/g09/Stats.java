@@ -24,6 +24,7 @@ public class Stats extends AppCompatActivity {
     TextView stats6;
     TextView stats6v2;
     TextView stats7;
+    TextView stats8;
     Button resetStatsBtn;
 
     @Override
@@ -40,6 +41,7 @@ public class Stats extends AppCompatActivity {
         stats6 = findViewById(R.id.stats6);
         stats6v2 = findViewById(R.id.stats6v2);
         stats7 = findViewById(R.id.stats7);
+        stats8 = findViewById(R.id.stats8);
         resetStatsBtn = findViewById(R.id.resetScores);
 
         refreshScores();
@@ -72,6 +74,7 @@ public class Stats extends AppCompatActivity {
         stats6.setText(String.valueOf(getHighScore("stats6CurrentHS")));
         stats6v2.setText(String.valueOf(getHighScore("stats6v2CurrentHS")));
         stats7.setText(String.valueOf(getHighScore("stats7CurrentHS")));
+        stats8.setText(String.valueOf(getHighScore("stats8CurrentHS")));
     }
 
     private void resetStats() {

@@ -36,6 +36,10 @@ public class Lvl8 extends Level  {
     float[] orientation = new float[3];
     private ArrayList<Float> mLastLinAcc = new ArrayList<Float>();
     int steps = 0;
+
+    double a, b;
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl8);
@@ -53,6 +57,9 @@ public class Lvl8 extends Level  {
             }
         });
         pickDirection();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+
+        a = startTimer();
         start();
     }
 
@@ -126,7 +133,16 @@ public class Lvl8 extends Level  {
 
         if(steps == 0){
             stop();
-            finish();
+            b = stopTimer();
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putFloat("stats8", (float)calculateElapsedTime(a, b));
+            editor.apply();
+            if(getScore("stats8") < getCurrentHighScore("stats8CurrentHS"))
+                editor.putFloat("stats8CurrentHS", (float)calculateElapsedTime(a, b));
+            editor.apply();
+
+            winAlert("Gratulacje", "\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund", null);
         }
     }
     @SuppressLint("SetTextI18n")
