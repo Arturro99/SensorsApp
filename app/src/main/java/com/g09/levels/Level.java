@@ -50,13 +50,14 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {}
 
-    protected void noSensorsAlert() {
+    protected void noSensorsAlert(Class cl) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("Your device doesn't support the sensors used in level.")
                 .setCancelable(false)
                 .setNegativeButton("Close",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
+                        if(cl != null && getFlagStart())
+                            startActivity(new Intent(getApplicationContext(), cl));
                     }
                 });
         alertDialog.show();

@@ -58,7 +58,7 @@ public class Lvl1 extends Level {
 
     public void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE) == null) {
-            noSensorsAlert();
+            noSensorsAlert(Lvl2.class);
         }
         else {
             mGyroscopeSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);

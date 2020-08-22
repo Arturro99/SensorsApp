@@ -53,7 +53,7 @@ public class Lvl5 extends Level {
 
     public void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY) == null) {
-            noSensorsAlert();
+            noSensorsAlert(Lvl6.class);
         }
         else {
             mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
