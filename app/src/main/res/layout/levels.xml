@@ -105,6 +105,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp" />
 
+            <Button
+                android:id="@+id/lvl8BTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LVL 8" />
+
         </LinearLayout>
     </ScrollView>
 

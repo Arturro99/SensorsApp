@@ -118,7 +118,7 @@ public class Lvl2 extends Level {
                         manCenterX = manX + man.getWidth() / 2.0;
                         manCenterY = manY + man.getHeight() / 2.0;
 
-                        if (checkInfected() && timer == null) {
+                        if (checkInfected() && timer != null) {
                             stop();
                             winAlert("Ooops", "Zostałeś zakażony", Lvl2.class);
                         }
