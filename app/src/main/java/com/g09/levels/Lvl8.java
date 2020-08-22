@@ -59,7 +59,7 @@ public class Lvl8 extends Level  {
     @Override
     protected void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null || mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) == null) {
-            noSensorsAlert();
+            noSensorsAlert(null);
         }
         else {
             mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
