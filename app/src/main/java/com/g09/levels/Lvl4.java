@@ -55,7 +55,7 @@ public class Lvl4 extends Level {
     @Override
     public void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT) == null) {
-            noSensorsAlert();
+            noSensorsAlert(Lvl5.class);
         }
         else {
             mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -91,7 +91,7 @@ public class Lvl4 extends Level {
     public void onSensorChanged(SensorEvent sensorEvent) {
         lightValue = (int) sensorEvent.values[0];
         String f = "";
-        if(lightValue > 3000) {
+        if(lightValue > 1000) {
             double b = stopTimer();
             f = "\nudalo sie";
             winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl5.class);

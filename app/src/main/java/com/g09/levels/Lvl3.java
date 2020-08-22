@@ -64,7 +64,7 @@ public class Lvl3 extends Level {
 
     public void start() {
         if ((mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) || (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null)) {
-            noSensorsAlert();
+            noSensorsAlert(Lvl4.class);
         }
         else {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
