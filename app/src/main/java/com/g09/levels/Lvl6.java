@@ -155,7 +155,7 @@ public class Lvl6 extends Level {
             } finally {
 
             }
-            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + calculateElapsedTime((float)a, (float)b) + " sekund\");", Lvl7.class);
+            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund\");", Lvl6v2.class);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putFloat("stats6", (float)calculateElapsedTime(a, b));

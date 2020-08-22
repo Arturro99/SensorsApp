@@ -13,7 +13,7 @@
         android:layout_height="60dp"
         android:background="@android:color/white"
         android:gravity="center"
-        android:textSize="30dp"
+        android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
             android:id="@+id/corona1"
             android:layout_width="22dp"
             android:layout_height="21dp"
-            android:layout_gravity="right"
+            android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/virus" />
@@ -76,7 +76,7 @@
             android:id="@+id/corona2"
             android:layout_width="22dp"
             android:layout_height="21dp"
-            android:layout_gravity="right"
+            android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/virus" />
@@ -85,7 +85,7 @@
             android:id="@+id/corona3"
             android:layout_width="22dp"
             android:layout_height="21dp"
-            android:layout_gravity="right"
+            android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/virus" />
