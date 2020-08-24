@@ -119,10 +119,6 @@ public class Lvl2 extends Level {
                         manCenterY = manY + man.getHeight() / 2.0;
 
                         if (checkInfected() && timer != null) {
-                            timeTxt.setText(String.valueOf("ManX i ManY: " + manCenterX + "\t" + manCenterY +
-                                    "\nCorona1 X i Y: " + coronaCenterX[0] + "\t" + coronaCenterY[0] +
-                                    "\nCorona2 X i Y: " + coronaCenterX[1] + "\t" + coronaCenterY[1] +
-                                    "\nCorona3 X i Y: " + coronaCenterX[2] + "\t" + coronaCenterY[2]));
                             stop();
                             winAlert("Ooops", "Zostałeś zakażony", Lvl2.class);
                         }

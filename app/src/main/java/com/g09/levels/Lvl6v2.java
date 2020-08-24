@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class Lvl6v2 extends Level {
@@ -30,6 +31,7 @@ public class Lvl6v2 extends Level {
     private TextView textView6;
     private TextView currentValue;
     private TextView achievedValue;
+    private ImageButton hint6v2;
 
     private double[] startingValues = new double[3];
     boolean firstTimeChecked = false;
@@ -50,7 +52,15 @@ public class Lvl6v2 extends Level {
         textView6 = findViewById(R.id.textView6);
         currentValue = findViewById(R.id.currentValue);
         achievedValue = findViewById(R.id.achievedValue);
+        hint6v2 = findViewById(R.id.hint6v2);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+
+        hint6v2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHint("Po prostu wczytaj się w kaprysy telefonu.");
+            }
+        });
 
         a = startTimer();
         start();
@@ -99,7 +109,7 @@ public class Lvl6v2 extends Level {
         }
         if(secondStepDone) thirdStep(sensorEvent);
 
-        currentValue.setText(String.valueOf(sensorEvent.values[0]));
+        //currentValue.setText(String.valueOf(sensorEvent.values[0]));
 
     }
 
@@ -119,7 +129,7 @@ public class Lvl6v2 extends Level {
             mSensorManager.unregisterListener(this, mGravitySensor);
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ringtone);
             mediaPlayer.start();
-            achievedValue.setText(String.valueOf(startingValues[0]));
+            //achievedValue.setText(String.valueOf(startingValues[0]));
             //textView6.setText(String.valueOf(startingValues[0]));
             return true;
         }
