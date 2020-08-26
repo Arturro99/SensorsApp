@@ -18,9 +18,10 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="56dp"
         android:text="Idź na"
-        app:layout_constraintBottom_toTopOf="@+id/lvl8txt"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/lvl8direction"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
@@ -29,19 +30,21 @@
         android:id="@+id/lvl8txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="216dp"
+        android:layout_marginBottom="248dp"
         android:text="TextView"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/lvl8he"
+        android:id="@+id/lvl8direction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="52dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/lvl8txt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

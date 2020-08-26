@@ -79,7 +79,15 @@ public class Stats extends AppCompatActivity {
 
     private void resetStats() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        preferences.edit().clear().apply();
+        preferences.edit().remove("stats1CurrentHS").apply();
+        preferences.edit().remove("stats2CurrentHS").apply();
+        preferences.edit().remove("stats3CurrentHS").apply();
+        preferences.edit().remove("stats4CurrentHS").apply();
+        preferences.edit().remove("stats5CurrentHS").apply();
+        preferences.edit().remove("stats6CurrentHS").apply();
+        preferences.edit().remove("stats6v2CurrentHS").apply();
+        preferences.edit().remove("stats7CurrentHS").apply();
+        preferences.edit().remove("stats8CurrentHS").apply();
     }
 
     private boolean getFlag() {

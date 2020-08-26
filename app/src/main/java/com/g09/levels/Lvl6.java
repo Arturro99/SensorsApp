@@ -111,7 +111,7 @@ public class Lvl6 extends Level {
         if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE) {
             if (!done) {
                 initialPressureValue = (float) sensorEvent.values[0];
-                help.setText(String.valueOf(initialPressureValue));
+                //help.setText(String.valueOf(initialPressureValue));
                 done = true;
             }
             pressureValue = (float) sensorEvent.values[0];
@@ -125,12 +125,12 @@ public class Lvl6 extends Level {
         }
         if(linearAccelerationValue >= 9) {
             mSensorManager.unregisterListener(this, mLinearAcceleration);
-            maxLinearAcc.setText(String.valueOf(linearAccelerationValue) + "m/s^2");
+            //maxLinearAcc.setText(String.valueOf(linearAccelerationValue) + "m/s^2");
             enoughAcceleration = true;
             Runnable r = new Runnable() {
                 @Override
                 public void run() {
-                    help.setText(String.valueOf(sensorEvent.values[0]) + sensorEvent.sensor.getName());
+                    //help.setText(String.valueOf(sensorEvent.values[0]) + sensorEvent.sensor.getName());
                     if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE && sensorEvent.values[0] - initialPressureValue >= 0.08) {
                         enoughPressure = true;
                     }
@@ -144,7 +144,7 @@ public class Lvl6 extends Level {
                 mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
             }
         }
-        lvl6txt.setText(String.valueOf(pressureValue) + "hPa ");
+        //lvl6txt.setText(String.valueOf(pressureValue) + "hPa ");
 
         if(enoughAcceleration && enoughPressure) {
             onPause();
