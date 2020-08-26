@@ -107,7 +107,7 @@ public class Lvl6 extends Level {
 
 
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
+    public void onSensorChanged(final SensorEvent sensorEvent) {
         if(sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE) {
             if (!done) {
                 initialPressureValue = (float) sensorEvent.values[0];

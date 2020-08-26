@@ -96,14 +96,14 @@ public class Lvl2 extends Level {
 
     public void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) {
-            noSensorsAlert(Lvl3.class);
+            noSensorsAlert();
         } else {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
         }
 
         //Wątek obsługujący ruch wirusów
-        android.os.Handler handler = new android.os.Handler();
+        final android.os.Handler handler = new android.os.Handler();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -119,10 +119,6 @@ public class Lvl2 extends Level {
                         manCenterY = manY + man.getHeight() / 2.0;
 
                         if (checkInfected() && timer != null) {
-                            timeTxt.setText(String.valueOf("ManX i ManY: " + manCenterX + "\t" + manCenterY +
-                                    "\nCorona1 X i Y: " + coronaCenterX[0] + "\t" + coronaCenterY[0] +
-                                    "\nCorona2 X i Y: " + coronaCenterX[1] + "\t" + coronaCenterY[1] +
-                                    "\nCorona3 X i Y: " + coronaCenterX[2] + "\t" + coronaCenterY[2]));
                             stop();
                             winAlert("Ooops", "Zostałeś zakażony", Lvl2.class);
                         }
@@ -181,7 +177,10 @@ public class Lvl2 extends Level {
     }
 
     private void moveVirus() {
-
+        timeTxt.setText(String.valueOf("ManX i ManY: " + manCenterX + "\t" + manCenterY +
+                "\nCorona1 X i Y: " + coronaCenterX[0] + "\t" + coronaCenterY[0] +
+                "\nCorona2 X i Y: " + coronaCenterX[1] + "\t" + coronaCenterY[1] +
+                "\nCorona3 X i Y: " + coronaCenterX[2] + "\t" + coronaCenterY[2]));
         for(int i = 0; i < listOfVirusesImg.size(); i++) {
             coronaY[i] = listOfVirusesImg.get(i).getY();
             coronaX[i] = listOfVirusesImg.get(i).getX();
@@ -198,6 +197,12 @@ public class Lvl2 extends Level {
             else if(listOfVirusesImg.get(i).getX() + listOfViruses.get(i).getSpeedX() <= 0)
                 listOfViruses.get(i).setGoingForwardX(true);
         }
+
+//        if(corona1.getY() + speedY + corona1.getHeight() >= gameLayout.getHeight()) goingForwardY = false;
+//        else if(corona1.getY() + speedY <= 0) goingForwardY = true;
+//
+//        if(corona1.getX() + speedX + corona1.getWidth() >= gameLayout.getWidth()) goingForwardX = false;
+//        else if(corona1.getX() + speedX <= 0) goingForwardX = true;
 
         for(int i = 0; i < listOfViruses.size(); i++) {
             if (listOfViruses.get(i).isGoingForwardY())
