@@ -75,7 +75,7 @@ public class Lvl2 extends Level {
         listOfViruses.add(corona2);
         listOfViruses.add(corona3);
 
-        hint.setOnClickListener(view -> showHint("Przetrwaj 20 sekund w morderczej walce z koronawirusem."));
+        hint.setOnClickListener(view -> showHint("Przetrwaj 10 sekund w morderczej walce z koronawirusem."));
 
         start();
     }
@@ -110,7 +110,7 @@ public class Lvl2 extends Level {
             }
         }, 0, 10);
 
-        final int[] i = {1};
+        final int[] i = {0};
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -118,7 +118,7 @@ public class Lvl2 extends Level {
                     timeTxt.setText(String.valueOf(i[0]));
                     i[0]++;
 
-                    if(i[0] == 21 && timer != null) {
+                    if(i[0] == 11 && timer != null) {
                         stop();
                         winAlert("Gratulacje", "Udało Ci się przetrwać", Lvl3.class);
                     }
@@ -157,10 +157,10 @@ public class Lvl2 extends Level {
     }
 
     private void moveVirus() {
-        timeTxt.setText(String.valueOf("ManX i ManY: " + manCenterX + "\t" + manCenterY +
-                "\nCorona1 X i Y: " + coronaCenterX[0] + "\t" + coronaCenterY[0] +
-                "\nCorona2 X i Y: " + coronaCenterX[1] + "\t" + coronaCenterY[1] +
-                "\nCorona3 X i Y: " + coronaCenterX[2] + "\t" + coronaCenterY[2]));
+//        timeTxt.setText(String.valueOf("ManX i ManY: " + manCenterX + "\t" + manCenterY +
+//                "\nCorona1 X i Y: " + coronaCenterX[0] + "\t" + coronaCenterY[0] +
+//                "\nCorona2 X i Y: " + coronaCenterX[1] + "\t" + coronaCenterY[1] +
+//                "\nCorona3 X i Y: " + coronaCenterX[2] + "\t" + coronaCenterY[2]));
         for(int i = 0; i < listOfVirusesImg.size(); i++) {
             coronaY[i] = listOfVirusesImg.get(i).getY();
             coronaX[i] = listOfVirusesImg.get(i).getX();

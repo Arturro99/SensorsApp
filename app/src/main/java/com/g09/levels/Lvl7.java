@@ -25,6 +25,8 @@ public class Lvl7 extends Level {
     private BatteryReceiver batteryReceiver = new BatteryReceiver();
     private IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
+    double a;
+
     @Override
     public void onCreate() {
         setContentView(R.layout.lvl7);
@@ -37,18 +39,27 @@ public class Lvl7 extends Level {
         timerA = SystemClock.elapsedRealtime();
         registerReceiver(batteryReceiver, intentFilter);
 
+        a = startTimer();
+
         // Thread for playing the end theme
         Runnable r = () -> {
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.the_end_theme);
-            mediaPlayer.start();
 
 
             winAlert("Gratulacje", "Udało Ci się ukończyć wszystkie poziomy", null);
         };
 
         lvl7btn.setOnClickListener(view -> {
+            double b = stopTimer();
             unregisterReceiver(batteryReceiver);
-            winAlert("Gratulacje!", "Udało ci się przejść poziom!\nTwój czas: " + String.format("%.2f", (SystemClock.elapsedRealtime() - timerA)*0.001) + "sekund", Lvl8.class);
+//            winAlert("Gratulacje!", "Udało ci się przejść poziom!\nTwój czas: " + String.format("%.2f", (SystemClock.elapsedRealtime() - timerA)*0.001) + "sekund", Lvl8.class);
+            winAlert("Gratulacje!", "Udało ci się przejść poziom!\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund", Lvl8.class);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putFloat("stats7", (float)calculateElapsedTime(a, b));
+            editor.apply();
+            if(getScore("stats7") < getCurrentHighScore("stats7CurrentHS"))
+                editor.putFloat("stats7CurrentHS", (float)calculateElapsedTime(a, b));
+            editor.apply();
         });
 
         hint.setOnClickListener(view -> {

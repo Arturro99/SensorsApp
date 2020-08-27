@@ -9,9 +9,10 @@ import android.preference.PreferenceManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.g09.MainActivity;
 import com.g09.R;
 
-public class Lvl6v2 extends Level {
+public class Lvl9 extends Level {
 
     private SensorManager mSensorManager;
     private Sensor mGravitySensor;
@@ -33,7 +34,7 @@ public class Lvl6v2 extends Level {
 
     @Override
     protected void onCreate() {
-        setContentView(R.layout.lvl6v2);
+        setContentView(R.layout.lvl9);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         textView6 = findViewById(R.id.textView6);
         hint6v2 = findViewById(R.id.hint6v2);
@@ -49,7 +50,7 @@ public class Lvl6v2 extends Level {
     protected void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY) == null &&
                 mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY) == null) {
-            noSensorsAlert(Lvl7.class);
+            noSensorsAlert(null);
         } else {
             mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
             mLinearAccelerationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
@@ -124,19 +125,26 @@ public class Lvl6v2 extends Level {
         mSensorManager.registerListener(this, mLinearAccelerationSensor, SensorManager.SENSOR_DELAY_UI);
         if (sensorEvent.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION && sensorEvent.values[2] >= 20) {
             mSensorManager.unregisterListener(this, mLinearAccelerationSensor);
-            textView6.setText(String.valueOf(sensorEvent.values[2]));
             b = stopTimer();
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putFloat("stats6v2", (float)calculateElapsedTime(a, b));
+            editor.putFloat("stats9", (float)calculateElapsedTime(a, b));
             editor.apply();
-            if(getScore("stats6v2") < getCurrentHighScore("stats6v2CurrentHS"))
-                editor.putFloat("stats6v2CurrentHS", (float)calculateElapsedTime(a, b));
+            if(getScore("stats9") < getCurrentHighScore("stats9CurrentHS"))
+                editor.putFloat("stats9CurrentHS", (float)calculateElapsedTime(a, b));
             editor.apply();
 
-            winAlert("Gratulacje", "\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund", Lvl7.class);
+            stop();
+            if(!getFlagStart())
+                winAlert("Gratulacje", "\nTwój czas: " + (float) calculateElapsedTime(a, b) + " sekund", MainActivity.class);
+            else {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.the_end_theme);
+                mediaPlayer.start();
+                theEnd(mediaPlayer, String.valueOf("Twój czas: " + (float)calculateElapsedTime(a, b) + " sekund\nUdało Ci się ukończyć grę!"));
+            }
+
         } else if(sensorEvent.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION && sensorEvent.values[2] < 20 && sensorEvent.values[2] > 10) {
-            winAlert("Porażka", "To nie była szybka reakcja...", Lvl6v2.class);
+            winAlert("Porażka", "To nie była szybka reakcja...", Lvl9.class);
 
             stop();
         }

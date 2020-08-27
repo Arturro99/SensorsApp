@@ -33,7 +33,6 @@ public class Lvl4 extends Level {
     public void onCreate() {
         setContentView(R.layout.lvl4);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        lvl4txt = findViewById(R.id.lvl4txt);
         timeTxt = findViewById(R.id.time4);
         ImageButton hint = findViewById(R.id.hint4);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
@@ -94,6 +93,5 @@ public class Lvl4 extends Level {
 
             stop();
         }
-        lvl4txt.setText(lightValue + " lux" + f);
     }
 }

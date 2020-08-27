@@ -62,7 +62,7 @@ public class Lvl6 extends Level {
 
     public void start() {
         if(mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE) == null)
-            noSensorsAlert(Lvl6v2.class);
+            noSensorsAlert(Lvl9.class);
         else {
             mPressure = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
             mSensorManager.registerListener(this, mPressure, SensorManager.SENSOR_DELAY_UI);
@@ -130,7 +130,7 @@ public class Lvl6 extends Level {
             b = stopTimer();
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ouch);
             mediaPlayer.start();
-            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund\");", Lvl6v2.class);
+            winAlert("Gratulacje!", "...and belief is all what's left.\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund\");", Lvl7.class);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putFloat("stats6", (float)calculateElapsedTime(a, b));

@@ -19,7 +19,6 @@ public class Lvl5 extends Level {
     private SensorManager mSensorManager;
     private Sensor mProximitySensor;
     int proximityValue;
-    TextView lvl5txt;
     TextView timeTxt;
 
     Timer timer = new Timer();
@@ -33,7 +32,6 @@ public class Lvl5 extends Level {
     protected void onCreate() {
         setContentView(R.layout.lvl5);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        lvl5txt = findViewById(R.id.lvl5txt);
         timeTxt = findViewById(R.id.time5);
         ImageButton hint = findViewById(R.id.hint5);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
@@ -95,6 +93,5 @@ public class Lvl5 extends Level {
 
             stop();
         }
-        lvl5txt.setText(proximityValue + " cm" + f);
     }
 }

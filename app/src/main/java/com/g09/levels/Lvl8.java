@@ -53,7 +53,7 @@ public class Lvl8 extends Level  {
     @Override
     protected void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null || mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) == null) {
-            noSensorsAlert(null);
+            noSensorsAlert(Lvl9.class);
         }
         else {
             mLinearAcceleration = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
@@ -120,7 +120,7 @@ public class Lvl8 extends Level  {
                             editor.putFloat("stats8CurrentHS", (float)calculateElapsedTime(a, b));
                         editor.apply();
 
-                        winAlert("Gratulacje", "\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund", null);
+                        winAlert("Gratulacje", "\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund", Lvl9.class);
                     }
                 }
 

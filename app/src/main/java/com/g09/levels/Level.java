@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
@@ -12,9 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.g09.MainActivity;
 import com.g09.R;
 
 public abstract class Level extends AppCompatActivity implements SensorEventListener {
+
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,9 +66,22 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
                 .setTitle(title)
                 .setCancelable(false)
                 .setNegativeButton("Ok", (dialog, id) -> {
-                    finish();
+                    if(cl != null)
+                        finish();
                     if(cl != null && getFlagStart())
                         startActivity(new Intent(getApplicationContext(), cl));
+                });
+        alertDialog.show();
+    }
+
+    protected void theEnd(MediaPlayer mediaPlayer, String message) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage(message)
+                .setTitle("Gratulacje")
+                .setCancelable(false)
+                .setNegativeButton("Ok", (dialog, id) -> {
+                    finish();
+                    mediaPlayer.stop();
                 });
         alertDialog.show();
     }

@@ -12,14 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Stats extends AppCompatActivity {
 
     TextView stats1;
-    TextView stats2;
     TextView stats3;
     TextView stats4;
     TextView stats5;
     TextView stats6;
-    TextView stats6v2;
     TextView stats7;
     TextView stats8;
+    TextView stats9;
     Button resetStatsBtn;
 
     @Override
@@ -29,12 +28,11 @@ public class Stats extends AppCompatActivity {
         setContentView(R.layout.activity_stats);
 
         stats1 = findViewById(R.id.stats1);
-        stats2 = findViewById(R.id.stats2);
         stats3 = findViewById(R.id.stats3);
         stats4 = findViewById(R.id.stats4);
         stats5 = findViewById(R.id.stats5);
         stats6 = findViewById(R.id.stats6);
-        stats6v2 = findViewById(R.id.stats6v2);
+        stats9 = findViewById(R.id.stats9);
         stats7 = findViewById(R.id.stats7);
         stats8 = findViewById(R.id.stats8);
         resetStatsBtn = findViewById(R.id.resetScores);
@@ -59,27 +57,25 @@ public class Stats extends AppCompatActivity {
 
     public void refreshScores() {
         stats1.setText(String.valueOf(getHighScore("stats1CurrentHS")));
-        stats2.setText(String.valueOf(getHighScore("stats2CurrentHS")));
         stats3.setText(String.valueOf(getHighScore("stats3CurrentHS")));
         stats4.setText(String.valueOf(getHighScore("stats4CurrentHS")));
         stats5.setText(String.valueOf(getHighScore("stats5CurrentHS")));
         stats6.setText(String.valueOf(getHighScore("stats6CurrentHS")));
-        stats6v2.setText(String.valueOf(getHighScore("stats6v2CurrentHS")));
         stats7.setText(String.valueOf(getHighScore("stats7CurrentHS")));
         stats8.setText(String.valueOf(getHighScore("stats8CurrentHS")));
+        stats9.setText(String.valueOf(getHighScore("stats9CurrentHS")));
     }
 
     private void resetStats() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.edit().remove("stats1CurrentHS").apply();
-        preferences.edit().remove("stats2CurrentHS").apply();
         preferences.edit().remove("stats3CurrentHS").apply();
         preferences.edit().remove("stats4CurrentHS").apply();
         preferences.edit().remove("stats5CurrentHS").apply();
         preferences.edit().remove("stats6CurrentHS").apply();
-        preferences.edit().remove("stats6v2CurrentHS").apply();
         preferences.edit().remove("stats7CurrentHS").apply();
         preferences.edit().remove("stats8CurrentHS").apply();
+        preferences.edit().remove("stats9CurrentHS").apply();
     }
 
     private boolean getFlag() {
