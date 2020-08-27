@@ -5,21 +5,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
-import android.os.Bundle;
-
-import com.g09.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.g09.R;
 
 public class Lvl6v2 extends Level {
 
@@ -27,10 +17,7 @@ public class Lvl6v2 extends Level {
     private Sensor mGravitySensor;
     private Sensor mLinearAccelerationSensor;
 
-    private TextView time6v2;
     private TextView textView6;
-    private TextView currentValue;
-    private TextView achievedValue;
     private ImageButton hint6v2;
 
     private double[] startingValues = new double[3];
@@ -48,19 +35,11 @@ public class Lvl6v2 extends Level {
     protected void onCreate() {
         setContentView(R.layout.lvl6v2);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        time6v2 = findViewById(R.id.time6v2);
         textView6 = findViewById(R.id.textView6);
-        currentValue = findViewById(R.id.currentValue);
-        achievedValue = findViewById(R.id.achievedValue);
         hint6v2 = findViewById(R.id.hint6v2);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
-        hint6v2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showHint("Po prostu wczytaj się w kaprysy telefonu.");
-            }
-        });
+        hint6v2.setOnClickListener(view -> showHint("Po prostu wczytaj się w kaprysy telefonu."));
 
         a = startTimer();
         start();
@@ -75,7 +54,6 @@ public class Lvl6v2 extends Level {
             mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
             mLinearAccelerationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
             mSensorManager.registerListener(this, mGravitySensor, SensorManager.SENSOR_DELAY_UI);
-            //mSensorManager.registerListener(this, mLinearAccelerationSensor, SensorManager.SENSOR_DELAY_UI);
         }
 
     }
@@ -108,16 +86,13 @@ public class Lvl6v2 extends Level {
             if (firstStepDone && secondStep(sensorEvent)) secondStepDone = true;
         }
         if(secondStepDone) thirdStep(sensorEvent);
-
-        //currentValue.setText(String.valueOf(sensorEvent.values[0]));
-
     }
 
     private boolean stepZero(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_GRAVITY && sensorEvent.values[1] > 9 && sensorEvent.values[2] < 1) {
             startingValues[0] = sensorEvent.values[0];
             mSensorManager.unregisterListener(this, mGravitySensor);
-            textView6.setText(String.valueOf("Jestem zmęczony, daj mi odpocząć."));
+            textView6.setText("Jestem zmęczony, daj mi odpocząć.");
             return true;
         }
         return false;
@@ -129,8 +104,6 @@ public class Lvl6v2 extends Level {
             mSensorManager.unregisterListener(this, mGravitySensor);
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ringtone);
             mediaPlayer.start();
-            //achievedValue.setText(String.valueOf(startingValues[0]));
-            //textView6.setText(String.valueOf(startingValues[0]));
             return true;
         }
         return false;
@@ -141,7 +114,7 @@ public class Lvl6v2 extends Level {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_GRAVITY && sensorEvent.values[2] > 9) {
             mediaPlayer.setVolume(10, 10);
             mSensorManager.unregisterListener(this, mGravitySensor);
-            textView6.setText(String.valueOf("Szybko, odbierz telefon!!"));
+            textView6.setText("Szybko, odbierz telefon!!");
             return true;
         }
         return false;

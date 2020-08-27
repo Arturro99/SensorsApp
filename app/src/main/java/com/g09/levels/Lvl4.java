@@ -15,9 +15,6 @@ import com.g09.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-//Czujnik światła			Light sensor					Trzeba zbliżyć/oddalić telefon do/od lampi
-
 public class Lvl4 extends Level {
     private SensorManager mSensorManager;
     private Sensor mLightSensor;
@@ -36,17 +33,12 @@ public class Lvl4 extends Level {
     public void onCreate() {
         setContentView(R.layout.lvl4);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        lvl4txt = (TextView)findViewById(R.id.lvl4txt);
+        lvl4txt = findViewById(R.id.lvl4txt);
         timeTxt = findViewById(R.id.time4);
         ImageButton hint = findViewById(R.id.hint4);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
-        hint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showHint("Warto poczytać o jednostkach pochodnych układu SI.");
-            }
-        });
+        hint.setOnClickListener(view -> showHint("Warto poczytać o jednostkach pochodnych układu SI."));
 
         start();
         a = startTimer();
@@ -68,12 +60,9 @@ public class Lvl4 extends Level {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            timeTxt.setText(String.valueOf(i[0]));
-                            i[0]++;
-                        }
+                    handler.post(() -> {
+                        timeTxt.setText(String.valueOf(i[0]));
+                        i[0]++;
                     });
                 }
             }, 0, 1000);
@@ -105,6 +94,6 @@ public class Lvl4 extends Level {
 
             stop();
         }
-        lvl4txt.setText(String.valueOf(lightValue) + " lux" + f);
+        lvl4txt.setText(lightValue + " lux" + f);
     }
 }

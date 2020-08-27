@@ -1,9 +1,5 @@
 package com.g09;
 
-import android.content.Context;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 public class Virus {
     long speedX;
     long speedY;

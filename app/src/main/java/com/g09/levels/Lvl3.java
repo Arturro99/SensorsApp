@@ -18,8 +18,6 @@ import com.g09.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//Magnetometr			AK09911 3-axis Magnetic field sensor		Góra telefonu ma wskazywać północ
-
 public class Lvl3 extends Level {
 
     TextView txt_compass;
@@ -43,21 +41,16 @@ public class Lvl3 extends Level {
     protected void onCreate() {
         setContentView(R.layout.lvl3);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        txt_compass = (TextView) findViewById(R.id.txt_azimuth);
+        txt_compass = findViewById(R.id.txt_azimuth);
         timeTxt = findViewById(R.id.time3);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         if(getFlag()){
-            ImageView lvl3img = (ImageView) findViewById(R.id.lvl3img);
+            ImageView lvl3img = findViewById(R.id.lvl3img);
             lvl3img.setImageResource(R.drawable.lvl3imgwhite);
         }
         ImageButton hint = findViewById(R.id.hint3);
 
-        hint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showHint("Czy twórca poziomu zaliczył sprawdzian z kierunków świata?");
-            }
-        });
+        hint.setOnClickListener(view -> showHint("Czy twórca poziomu zaliczył sprawdzian z kierunków świata?"));
         start();
         a = startTimer();
     }
@@ -79,12 +72,9 @@ public class Lvl3 extends Level {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            timeTxt.setText(String.valueOf(i[0]));
-                            i[0]++;
-                        }
+                    handler.post(() -> {
+                        timeTxt.setText(String.valueOf(i[0]));
+                        i[0]++;
                     });
                 }
             }, 0, 1000);

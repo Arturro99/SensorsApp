@@ -1,18 +1,13 @@
 package com.g09;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Stats extends AppCompatActivity {
 
@@ -46,15 +41,12 @@ public class Stats extends AppCompatActivity {
 
         refreshScores();
 
-        resetStatsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetStats();
-                Intent intent = new Intent(Stats.this, MainActivity.class);
-                startActivity(intent);
-                Intent intent2 = new Intent(Stats.this, Stats.class);
-                startActivity(intent2);
-            }
+        resetStatsBtn.setOnClickListener(view -> {
+            resetStats();
+            Intent intent = new Intent(Stats.this, MainActivity.class);
+            startActivity(intent);
+            Intent intent2 = new Intent(Stats.this, Stats.class);
+            startActivity(intent2);
         });
 
     }

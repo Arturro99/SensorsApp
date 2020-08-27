@@ -14,8 +14,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.g09.R;
 
-// Battery receiver							    Celem poziomu jest opodłączenie urządzenia do
-//										        dowolnego źródła prądu.
 
 public class Lvl7 extends Level {
 
@@ -37,58 +35,39 @@ public class Lvl7 extends Level {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         timerA = SystemClock.elapsedRealtime();
-        start();
+        registerReceiver(batteryReceiver, intentFilter);
 
         // Thread for playing the end theme
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.the_end_theme);
-                mediaPlayer.start();
+        Runnable r = () -> {
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.the_end_theme);
+            mediaPlayer.start();
 
 
-                winAlert("Gratulacje", "Udało Ci się ukończyć wszystkie poziomy", null);
-            }
+            winAlert("Gratulacje", "Udało Ci się ukończyć wszystkie poziomy", null);
         };
 
-        lvl7btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO
-
-                // Win alert pokazuje poniższą informację i czas w dobry sposób, ale wysypuje się program
-                // winAlert("Gratulacje!", "Udało ci się przejść poziom!\nTwój czas: " + (SystemClock.elapsedRealtime() - timerA)*0.001 + "sekund", Lvl8.class);
-
-                // Progressing past lvl 7
-
-
-                stop();
-
-                // Wątek na end theme nie jest chyba potrzebny
-                // r.run();
-            }
+        lvl7btn.setOnClickListener(view -> {
+            unregisterReceiver(batteryReceiver);
+            winAlert("Gratulacje!", "Udało ci się przejść poziom!\nTwój czas: " + String.format("%.2f", (SystemClock.elapsedRealtime() - timerA)*0.001) + "sekund", Lvl8.class);
         });
 
-        hint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showHint("Na początku było Słowo. (Genesis, 1, 1)");
-                if (getFlagStart()) {
-                    Handler h = new Handler();
-                    h.postDelayed(r, 3000);
-                }
+        hint.setOnClickListener(view -> {
+            showHint("Na początku było Słowo. (Genesis, 1, 1)");
+            if (getFlagStart()) {
+                Handler h = new Handler();
+                h.postDelayed(r, 3000);
             }
         });
     }
 
     @Override
     protected void start() {
-        registerReceiver(batteryReceiver, intentFilter);
+
     }
 
     @Override
     protected void stop() {
-        unregisterReceiver(batteryReceiver);
+
     }
 
     @Override

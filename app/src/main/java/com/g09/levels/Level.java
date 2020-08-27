@@ -1,6 +1,5 @@
 package com.g09.levels;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
@@ -8,16 +7,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.g09.R;
-import com.g09.Stats;
-
-import org.w3c.dom.Text;
 
 public abstract class Level extends AppCompatActivity implements SensorEventListener {
 
@@ -54,11 +49,9 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("Your device doesn't support the sensors used in level.")
                 .setCancelable(false)
-                .setNegativeButton("Close",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if(cl != null && getFlagStart())
-                            startActivity(new Intent(getApplicationContext(), cl));
-                    }
+                .setNegativeButton("Close", (dialog, id) -> {
+                    if(cl != null && getFlagStart())
+                        startActivity(new Intent(getApplicationContext(), cl));
                 });
         alertDialog.show();
     }
@@ -68,12 +61,10 @@ public abstract class Level extends AppCompatActivity implements SensorEventList
         alertDialog.setMessage(message)
                 .setTitle(title)
                 .setCancelable(false)
-                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                        if(cl != null && getFlagStart())
-                            startActivity(new Intent(getApplicationContext(), cl));
-                    }
+                .setNegativeButton("Ok", (dialog, id) -> {
+                    finish();
+                    if(cl != null && getFlagStart())
+                        startActivity(new Intent(getApplicationContext(), cl));
                 });
         alertDialog.show();
     }

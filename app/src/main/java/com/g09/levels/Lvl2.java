@@ -1,16 +1,12 @@
 package com.g09.levels;
 
-import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AlertDialog;
 
 import com.g09.R;
 import com.g09.Virus;
@@ -19,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//Akcelerometr			LSM330 3-axis accelerometer			Trzeba telefon ustawić pod odpowiednim kątem
 
 public class Lvl2 extends Level {
 
@@ -49,17 +44,13 @@ public class Lvl2 extends Level {
     private double[] coronaCenterX = new double[3];
     private double[] coronaCenterY = new double[3];
 
-    //Change moving direction
-    boolean goingForwardY = true;
-    boolean goingForwardX = true;
-
     TextView timeTxt;
     Timer timer = new Timer();
 
     private Virus corona1 = new Virus("corona1");
     private Virus corona2 = new Virus("corona2");
     private Virus corona3 = new Virus("corona3");
-    private ArrayList<Virus>listOfViruses = new ArrayList<Virus>();
+    private ArrayList<Virus>listOfViruses = new ArrayList<>();
 
 
     @Override
@@ -84,19 +75,14 @@ public class Lvl2 extends Level {
         listOfViruses.add(corona2);
         listOfViruses.add(corona3);
 
-        hint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showHint("Przetrwaj 20 sekund w morderczej walce z koronawirusem.");
-            }
-        });
+        hint.setOnClickListener(view -> showHint("Przetrwaj 20 sekund w morderczej walce z koronawirusem."));
 
         start();
     }
 
     public void start() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) {
-            noSensorsAlert();
+            noSensorsAlert(Lvl3.class);
         } else {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
@@ -107,21 +93,18 @@ public class Lvl2 extends Level {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        moveVirus();
-                        for(int i = 0; i < listOfVirusesImg.size(); i++) {
-                            coronaCenterY[i] = coronaY[i] + listOfVirusesImg.get(i).getHeight() / 2.0;
-                            coronaCenterX[i] = coronaX[i] + listOfVirusesImg.get(i).getWidth() / 2.0;
-                        }
-                        manCenterX = manX + man.getWidth() / 2.0;
-                        manCenterY = manY + man.getHeight() / 2.0;
+                handler.post(() -> {
+                    moveVirus();
+                    for(int i = 0; i < listOfVirusesImg.size(); i++) {
+                        coronaCenterY[i] = coronaY[i] + listOfVirusesImg.get(i).getHeight() / 2.0;
+                        coronaCenterX[i] = coronaX[i] + listOfVirusesImg.get(i).getWidth() / 2.0;
+                    }
+                    manCenterX = manX + man.getWidth() / 2.0;
+                    manCenterY = manY + man.getHeight() / 2.0;
 
-                        if (checkInfected() && timer != null) {
-                            stop();
-                            winAlert("Ooops", "Zostałeś zakażony", Lvl2.class);
-                        }
+                    if (checkInfected() && timer != null) {
+                        stop();
+                        winAlert("Ooops", "Zostałeś zakażony", Lvl2.class);
                     }
                 });
             }
@@ -131,16 +114,13 @@ public class Lvl2 extends Level {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        timeTxt.setText(String.valueOf(i[0]));
-                        i[0]++;
+                handler.post(() -> {
+                    timeTxt.setText(String.valueOf(i[0]));
+                    i[0]++;
 
-                        if(i[0] == 21 && timer != null) {
-                            stop();
-                            winAlert("Gratulacje", "Udało Ci się przetrwać", Lvl3.class);
-                        }
+                    if(i[0] == 21 && timer != null) {
+                        stop();
+                        winAlert("Gratulacje", "Udało Ci się przetrwać", Lvl3.class);
                     }
                 });
             }

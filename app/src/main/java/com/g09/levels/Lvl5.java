@@ -15,8 +15,6 @@ import com.g09.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//Czujnik zbliżeniowy		Proximity sensor				Trzeba zbliżyć się do telefonu (czujnika)
-
 public class Lvl5 extends Level {
     private SensorManager mSensorManager;
     private Sensor mProximitySensor;
@@ -35,17 +33,12 @@ public class Lvl5 extends Level {
     protected void onCreate() {
         setContentView(R.layout.lvl5);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        lvl5txt = (TextView)findViewById(R.id.lvl5txt);
+        lvl5txt = findViewById(R.id.lvl5txt);
         timeTxt = findViewById(R.id.time5);
         ImageButton hint = findViewById(R.id.hint5);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
-        hint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showHint("Nawet ja potrzebuję trochę czułości.");
-            }
-        });
+        hint.setOnClickListener(view -> showHint("Nawet ja potrzebuję trochę czułości."));
 
         start();
         a = startTimer();
@@ -66,12 +59,9 @@ public class Lvl5 extends Level {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            timeTxt.setText(String.valueOf(i[0]));
-                            i[0]++;
-                        }
+                    handler.post(() -> {
+                        timeTxt.setText(String.valueOf(i[0]));
+                        i[0]++;
                     });
                 }
             }, 0, 1000);
@@ -105,6 +95,6 @@ public class Lvl5 extends Level {
 
             stop();
         }
-        lvl5txt.setText(String.valueOf(proximityValue) + " cm" + f);
+        lvl5txt.setText(proximityValue + " cm" + f);
     }
 }

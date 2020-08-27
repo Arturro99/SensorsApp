@@ -91,7 +91,7 @@ public class Lvl8 extends Level  {
             goodDirection = true;
         else
             goodDirection = false;
-//
+
         if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
             mLastLinAcc.add(event.values[1]);
             if(mLastLinAcc.size() > 14)
