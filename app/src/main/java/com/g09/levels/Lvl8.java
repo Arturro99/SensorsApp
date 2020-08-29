@@ -5,13 +5,17 @@ import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.g09.R;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Lvl8 extends Level  {
     private SensorManager mSensorManager;
@@ -19,6 +23,7 @@ public class Lvl8 extends Level  {
     private Sensor mRotationV;
     TextView lvl8txt;
     TextView lvl8direction;
+    TextView timeTxt;
     enum Dir {N, E, S, W}
     Dir direction = Dir.N;
     boolean goodDirection = false;
@@ -32,6 +37,9 @@ public class Lvl8 extends Level  {
     double a, b;
     SharedPreferences sharedPreferences;
 
+    Timer timer = new Timer();
+    Handler handler = new Handler();
+
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl8);
@@ -41,6 +49,7 @@ public class Lvl8 extends Level  {
         lvl8txt = findViewById(R.id.lvl8txt);
         ImageButton hint = findViewById(R.id.hint8);
         lvl8direction = findViewById(R.id.lvl8direction);
+        timeTxt = findViewById(R.id.time8);
 
         hint.setOnClickListener(view -> showHint("Prostszego poziomu nie ma."));
         pickDirection();
@@ -60,6 +69,20 @@ public class Lvl8 extends Level  {
             mRotationV = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
             haveSensor = mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_UI);
             haveSensor2 = mSensorManager.registerListener(this, mRotationV, SensorManager.SENSOR_DELAY_UI);
+        }
+
+        if(getFlagTime()) {
+            final int[] i = {0};
+            timeTxt.setVisibility(View.VISIBLE);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(() -> {
+                        timeTxt.setText(String.valueOf(i[0]));
+                        i[0]++;
+                    });
+                }
+            }, 0, 1000);
         }
     }
 

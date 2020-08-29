@@ -88,7 +88,7 @@ public class Lvl1 extends Level {
             double b = stopTimer();
             f = "\nudalo sie ";
             lvl1txt.setText(String.valueOf(gyroscopeValue) + f + String.valueOf(max));
-            winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl9.class);
+            winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl2.class);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putFloat("stats1", (float)calculateElapsedTime(a, b));

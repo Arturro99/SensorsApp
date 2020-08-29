@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/time6v2"
+        android:id="@+id/time9"
         android:text="0"
         android:layout_width="162dp"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/time6v2"
+        app:layout_constraintTop_toTopOf="@+id/time9"
         app:layout_constraintVertical_bias="0.599" />
 <!--        android:text="TextView"-->
 
@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/time6v2"
+        app:layout_constraintTop_toTopOf="@+id/time9"
         app:layout_constraintVertical_bias="0.671" />
 <!--        android:text="TextView"-->
 

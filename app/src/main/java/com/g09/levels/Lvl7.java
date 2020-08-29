@@ -14,12 +14,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.g09.R;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Lvl7 extends Level {
 
     MediaPlayer mediaPlayer;
     SharedPreferences sharedPreferences;
     TextView lvl7txt;
+    TextView timeTxt;
     Button lvl7btn;
     Long timerA;
     private BatteryReceiver batteryReceiver = new BatteryReceiver();
@@ -27,11 +31,15 @@ public class Lvl7 extends Level {
 
     double a;
 
+    Timer timer = new Timer();
+    Handler handler = new Handler();
+
     @Override
     public void onCreate() {
         setContentView(R.layout.lvl7);
         ImageButton hint = findViewById(R.id.hint7);
         lvl7txt = findViewById(R.id.lvl7txt);
+        timeTxt = findViewById(R.id.time7);
         lvl7btn = findViewById(R.id.lvl7BTN);
         lvl7btn.setVisibility(View.INVISIBLE);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
@@ -40,18 +48,9 @@ public class Lvl7 extends Level {
         registerReceiver(batteryReceiver, intentFilter);
 
         a = startTimer();
-
-        // Thread for playing the end theme
-        Runnable r = () -> {
-
-
-            winAlert("Gratulacje", "Udało Ci się ukończyć wszystkie poziomy", null);
-        };
-
         lvl7btn.setOnClickListener(view -> {
             double b = stopTimer();
             unregisterReceiver(batteryReceiver);
-//            winAlert("Gratulacje!", "Udało ci się przejść poziom!\nTwój czas: " + String.format("%.2f", (SystemClock.elapsedRealtime() - timerA)*0.001) + "sekund", Lvl8.class);
             winAlert("Gratulacje!", "Udało ci się przejść poziom!\nTwój czas: " + (float)calculateElapsedTime(a, b) + " sekund", Lvl8.class);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -64,16 +63,24 @@ public class Lvl7 extends Level {
 
         hint.setOnClickListener(view -> {
             showHint("Na początku było Słowo. (Genesis, 1, 1)");
-            if (getFlagStart()) {
-                Handler h = new Handler();
-                h.postDelayed(r, 3000);
-            }
         });
     }
 
     @Override
     protected void start() {
-
+        if(getFlagTime()) {
+            final int[] i = {0};
+            timeTxt.setVisibility(View.VISIBLE);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(() -> {
+                        timeTxt.setText(String.valueOf(i[0]));
+                        i[0]++;
+                    });
+                }
+            }, 0, 1000);
+        }
     }
 
     @Override

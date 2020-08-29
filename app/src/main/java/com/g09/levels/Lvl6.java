@@ -62,7 +62,7 @@ public class Lvl6 extends Level {
 
     public void start() {
         if(mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE) == null)
-            noSensorsAlert(Lvl9.class);
+            noSensorsAlert(Lvl7.class);
         else {
             mPressure = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
             mSensorManager.registerListener(this, mPressure, SensorManager.SENSOR_DELAY_UI);

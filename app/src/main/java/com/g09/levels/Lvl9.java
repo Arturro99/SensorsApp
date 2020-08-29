@@ -5,12 +5,17 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.g09.MainActivity;
 import com.g09.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Lvl9 extends Level {
 
@@ -19,6 +24,7 @@ public class Lvl9 extends Level {
     private Sensor mLinearAccelerationSensor;
 
     private TextView textView6;
+    TextView timeTxt;
     private ImageButton hint6v2;
 
     private double[] startingValues = new double[3];
@@ -32,11 +38,15 @@ public class Lvl9 extends Level {
     MediaPlayer mediaPlayer;
     SharedPreferences sharedPreferences;
 
+    Timer timer = new Timer();
+    Handler handler = new Handler();
+
     @Override
     protected void onCreate() {
         setContentView(R.layout.lvl9);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         textView6 = findViewById(R.id.textView6);
+        timeTxt = findViewById(R.id.time9);
         hint6v2 = findViewById(R.id.hint6v2);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
@@ -55,6 +65,20 @@ public class Lvl9 extends Level {
             mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
             mLinearAccelerationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
             mSensorManager.registerListener(this, mGravitySensor, SensorManager.SENSOR_DELAY_UI);
+        }
+
+        if(getFlagTime()) {
+            final int[] i = {0};
+            timeTxt.setVisibility(View.VISIBLE);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(() -> {
+                        timeTxt.setText(String.valueOf(i[0]));
+                        i[0]++;
+                    });
+                }
+            }, 0, 1000);
         }
 
     }
