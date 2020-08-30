@@ -20,7 +20,6 @@ public class Lvl1 extends Level {
     private Sensor mGyroscopeSensor;
     int gyroscopeValue;
     float max;
-    TextView lvl1txt;
     TextView timeTxt;
 
     double a;
@@ -33,7 +32,6 @@ public class Lvl1 extends Level {
     protected void onCreate() {
         setContentView(R.layout.lvl1);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        lvl1txt = findViewById(R.id.lvl1txt);
         timeTxt = findViewById(R.id.time1);
         ImageButton hint = findViewById(R.id.hint1);
 
@@ -55,7 +53,7 @@ public class Lvl1 extends Level {
             if(max*0.9 < 30)
                 max *= 0.9;
             else
-                max = 5;
+                max = 30;
             mSensorManager.registerListener(this, mGyroscopeSensor, SensorManager.SENSOR_DELAY_UI);
         }
 
@@ -86,8 +84,6 @@ public class Lvl1 extends Level {
         String f;
         if(gyroscopeValue < -max) {
             double b = stopTimer();
-            f = "\nudalo sie ";
-            lvl1txt.setText(String.valueOf(gyroscopeValue) + f + String.valueOf(max));
             winAlert("Gratulację!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl2.class);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();

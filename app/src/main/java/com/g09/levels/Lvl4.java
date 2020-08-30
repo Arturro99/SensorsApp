@@ -19,7 +19,6 @@ public class Lvl4 extends Level {
     private SensorManager mSensorManager;
     private Sensor mLightSensor;
     int lightValue;
-    TextView lvl4txt;
     TextView timeTxt;
 
     Timer timer = new Timer();
@@ -78,10 +77,8 @@ public class Lvl4 extends Level {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         lightValue = (int) sensorEvent.values[0];
-        String f = "";
-        if(lightValue > 1000) {
+        if(lightValue > 6000) {
             double b = stopTimer();
-            f = "\nudalo sie";
             winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl5.class);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             exitIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(exitIntent);
         });
+
     }
 
 
