@@ -157,10 +157,6 @@ public class Lvl2 extends Level {
     }
 
     private void moveVirus() {
-//        timeTxt.setText(String.valueOf("ManX i ManY: " + manCenterX + "\t" + manCenterY +
-//                "\nCorona1 X i Y: " + coronaCenterX[0] + "\t" + coronaCenterY[0] +
-//                "\nCorona2 X i Y: " + coronaCenterX[1] + "\t" + coronaCenterY[1] +
-//                "\nCorona3 X i Y: " + coronaCenterX[2] + "\t" + coronaCenterY[2]));
         for(int i = 0; i < listOfVirusesImg.size(); i++) {
             coronaY[i] = listOfVirusesImg.get(i).getY();
             coronaX[i] = listOfVirusesImg.get(i).getX();
@@ -177,12 +173,6 @@ public class Lvl2 extends Level {
             else if(listOfVirusesImg.get(i).getX() + listOfViruses.get(i).getSpeedX() <= 0)
                 listOfViruses.get(i).setGoingForwardX(true);
         }
-
-//        if(corona1.getY() + speedY + corona1.getHeight() >= gameLayout.getHeight()) goingForwardY = false;
-//        else if(corona1.getY() + speedY <= 0) goingForwardY = true;
-//
-//        if(corona1.getX() + speedX + corona1.getWidth() >= gameLayout.getWidth()) goingForwardX = false;
-//        else if(corona1.getX() + speedX <= 0) goingForwardX = true;
 
         for(int i = 0; i < listOfViruses.size(); i++) {
             if (listOfViruses.get(i).isGoingForwardY())

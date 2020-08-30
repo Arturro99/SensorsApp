@@ -9,8 +9,8 @@ public class Virus {
 
     public Virus(String id) {
         this.id = id;
-        this.speedX = Math.round((Math.random()*10) + 1);
-        this.speedY = Math.round((Math.random()*20) + 1 );
+        this.speedX = Math.round((Math.random()*5) + 1);
+        this.speedY = Math.round((Math.random()*10) + 1 );
     }
 
     public long getSpeedX() {
