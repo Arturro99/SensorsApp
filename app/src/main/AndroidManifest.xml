@@ -9,30 +9,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="portrait"
             android:name=".levels.Lvl9"
             android:label="@string/title_activity_lvl6v2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Stats"
             android:label="@string/title_activity_stats"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Levels" />
-        <activity android:name=".levels.Lvl1" />
-        <activity android:name=".levels.Lvl2" />
-        <activity android:name=".levels.Lvl3" />
-        <activity android:name=".levels.Lvl4" />
-        <activity android:name=".levels.Lvl5" />
-        <activity android:name=".levels.Lvl6" />
-        <activity android:name=".levels.Lvl7" />
-        <activity android:name=".levels.Lvl8" />
-        <activity android:name=".Options" />
-        <activity android:name=".levels.Level" />
+        <activity android:name=".Levels" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Lvl1" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Lvl2" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Lvl3" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Lvl4" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Lvl5" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Lvl6" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Lvl7" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Lvl8" android:screenOrientation="portrait" />
+        <activity android:name=".Options" android:screenOrientation="portrait" />
+        <activity android:name=".levels.Level" android:screenOrientation="portrait" />
     </application>
 </manifest>
