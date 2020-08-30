@@ -20,7 +20,6 @@ import java.util.TimerTask;
 
 public class Lvl3 extends Level {
 
-    TextView txt_compass;
     int mAzimuth;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer, mMagnetometer;
@@ -41,7 +40,6 @@ public class Lvl3 extends Level {
     protected void onCreate() {
         setContentView(R.layout.lvl3);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        txt_compass = findViewById(R.id.txt_azimuth);
         timeTxt = findViewById(R.id.time3);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         if(getFlag()){
@@ -106,13 +104,9 @@ public class Lvl3 extends Level {
         mAzimuth = Math.round(mAzimuth);
 
 
-        String where = "NW";
-
         if (mAzimuth >= 350 || mAzimuth <= 10) {
-            where = "N";
             if(mLastAccelerometer[2] < -8) { //wartosc mLastAccelerometer[2] musi być mniejsza niż -8 (przyspieszenie ziemskie)
                 double b = stopTimer();
-                where += " \nudalo sie";
                 //Tu metoda, ktora konczy level
                 winAlert("Gratulacje!", "Udalo Ci się przejść poziom!\nTwój czas: " + calculateElapsedTime(a, b) + " sekund", Lvl4.class);
 
@@ -126,24 +120,5 @@ public class Lvl3 extends Level {
                 stop();
             }
         }
-        if (mAzimuth < 350 && mAzimuth > 280)
-            where = "NW";
-        if (mAzimuth <= 280 && mAzimuth > 260)
-            where = "W";
-        if (mAzimuth <= 260 && mAzimuth > 190)
-            where = "SW";
-        if (mAzimuth <= 190 && mAzimuth > 170)
-            where = "S";
-        if (mAzimuth <= 170 && mAzimuth > 100)
-            where = "SE";
-        if (mAzimuth <= 100 && mAzimuth > 80)
-            where = "E";
-        if (mAzimuth <= 80 && mAzimuth > 10)
-            where = "NE";
-
-
-        txt_compass.setText(mAzimuth + "° " + where);
-
-
     }
 }
